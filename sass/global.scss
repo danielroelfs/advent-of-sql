@@ -124,6 +124,7 @@ pre {
   text-align: center;
   & a {
     text-transform: lowercase;
+    color: $main-font-color !important;
     background-color: transparent !important;
   }
 }

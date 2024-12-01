@@ -25,18 +25,17 @@ challenge_done <- fs::dir_ls("./2024/", recurse = TRUE) |>
   str_extract("(?<=query_day)(.*)(?=.sql)") |>
   as.numeric()
 
-one_done <- challenge_done
-none_done <- setdiff(seq(25), challenge_done)
+not_done <- setdiff(seq(25), challenge_done)
 
 htmltools::tags$style(
   str_c(collapse = "\n",
     c(
       glue::glue(
-        "#panelset_day-[one_done] {color: #EBB626 !important;}",
+        "#panelset_001_day-[challenge_done] {color: #409327 !important;}",
         .open = "[", .close = "]"
       ),
       glue::glue(
-        "#panelset_day-[none_done] {color: #D63131 !important;}",
+        "#panelset_001_day-[not_done] {color: #D63131 !important;}",
         .open = "[", .close = "]"
       )
     )
@@ -64,7 +63,6 @@ knitr::opts_chunk$set(connection = "con")
 ::: {.panel}
 
 ## Day 1 {.panel-name}
-
 
 **Day 1**
 
