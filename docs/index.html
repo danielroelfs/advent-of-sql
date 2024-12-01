@@ -190,62 +190,88 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    GROUP BY child_id</span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>),</span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>wishes <span class="fu">AS</span> (</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>fav_colors <span class="fu">AS</span> (</span>
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    SELECT</span>
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>        wl.child_id,</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>        wl.wishes<span class="sc">::</span>json <span class="ot">-&gt;&gt;</span> <span class="st">'first_choice'</span> AS primary_wish,</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>        wl.wishes<span class="sc">::</span>json <span class="ot">-&gt;&gt;</span> <span class="st">'second_choice'</span> AS backup_wish</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    FROM wish_lists AS wl</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    INNER JOIN latest_list AS ll ON</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>        <span class="at">wl.child_id =</span> ll.child_id</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>        AND <span class="at">wl.submitted_date =</span> ll.latest</span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>),</span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>complexity <span class="fu">AS</span> (</span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>    SELECT</span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>        toy_name,</span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>        CASE</span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>            WHEN <span class="at">difficulty_to_make =</span> <span class="dv">1</span> THEN <span class="st">'Simple Gift'</span></span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>            WHEN <span class="at">difficulty_to_make =</span> <span class="dv">2</span> THEN <span class="st">'Moderate Gift'</span></span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>            ELSE <span class="st">'Complex Gift'</span></span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>        END AS gift_complexity,</span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>        CASE</span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>            WHEN <span class="at">category =</span> <span class="st">'educational'</span> THEN <span class="st">'Learning Workshop'</span></span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>            WHEN <span class="at">category =</span> <span class="st">'outdoor'</span> THEN <span class="st">'Outdoor Workshop'</span></span>
-<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>            ELSE <span class="st">'General Workshop'</span></span>
-<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>        END AS workshop_assignment</span>
-<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>    FROM toy_catalogue</span>
-<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>SELECT</span>
-<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>    ch.name,</span>
-<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>    wsh.primary_wish,</span>
-<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>    wsh.backup_wish,</span>
-<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>    cmplx.gift_complexity,</span>
-<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>    cmplx.workshop_assignment</span>
-<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>FROM children AS ch</span>
-<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>INNER JOIN wishes AS wsh ON ch.child_id <span class="ot">=</span> wsh.child_id</span>
-<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>INNER JOIN complexity AS cmplx ON wsh.primary_wish <span class="ot">=</span> cmplx.toy_name</span>
-<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>ORDER BY ch.name</span>
-<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a>LIMIT <span class="dv">5</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>        wl.wishes<span class="sc">::</span>json <span class="ot">-&gt;&gt;</span> <span class="st">'colors'</span> AS color_array</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    FROM wish_lists AS wl</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    INNER JOIN latest_list AS ll ON</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>        <span class="at">wl.child_id =</span> ll.child_id</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>        AND <span class="at">wl.submitted_date =</span> ll.latest</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>),</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>wishes <span class="fu">AS</span> (</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    SELECT</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>        wl.child_id,</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>        wl.wishes<span class="sc">::</span>json <span class="ot">-&gt;&gt;</span> <span class="st">'first_choice'</span> AS primary_wish,</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>        wl.wishes<span class="sc">::</span>json <span class="ot">-&gt;&gt;</span> <span class="st">'second_choice'</span> AS backup_wish,</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>        (wl.wishes<span class="sc">::</span>json <span class="ot">-&gt;</span> <span class="st">'colors'</span>)<span class="sc">::</span>json <span class="ot">-&gt;&gt;</span> <span class="dv">0</span> AS favorite_color,</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>        <span class="fu">JSON_ARRAY_LENGTH</span>(fc.color_array<span class="sc">::</span>json) AS n_colors</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>    FROM wish_lists AS wl</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>    INNER JOIN fav_colors AS fc</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>        ON <span class="at">wl.child_id =</span> fc.child_id</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>    INNER JOIN latest_list AS ll ON</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>        <span class="at">wl.child_id =</span> ll.child_id</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>        AND <span class="at">wl.submitted_date =</span> ll.latest</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>),</span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>complexity <span class="fu">AS</span> (</span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>    SELECT</span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>        toy_name,</span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>        CASE</span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>            WHEN <span class="at">difficulty_to_make =</span> <span class="dv">1</span> THEN <span class="st">'Simple Gift'</span></span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>            WHEN <span class="at">difficulty_to_make =</span> <span class="dv">2</span> THEN <span class="st">'Moderate Gift'</span></span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>            ELSE <span class="st">'Complex Gift'</span></span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>        END AS gift_complexity,</span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>        CASE</span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>            WHEN <span class="at">category =</span> <span class="st">'educational'</span> THEN <span class="st">'Learning Workshop'</span></span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>            WHEN <span class="at">category =</span> <span class="st">'outdoor'</span> THEN <span class="st">'Outdoor Workshop'</span></span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>            ELSE <span class="st">'General Workshop'</span></span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a>        END AS workshop_assignment</span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>    FROM toy_catalogue</span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a>SELECT</span>
+<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a>    ch.name,</span>
+<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a>    wsh.primary_wish,</span>
+<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a>    wsh.backup_wish,</span>
+<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a>    wsh.favorite_color,</span>
+<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a>    wsh.n_colors,</span>
+<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a>    cmplx.gift_complexity,</span>
+<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a>    cmplx.workshop_assignment</span>
+<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a>FROM children AS ch</span>
+<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a>INNER JOIN wishes AS wsh ON ch.child_id <span class="ot">=</span> wsh.child_id</span>
+<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a>INNER JOIN complexity AS cmplx ON wsh.primary_wish <span class="ot">=</span> cmplx.toy_name</span>
+<span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a>ORDER BY ch.name</span>
+<span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a>LIMIT <span class="dv">10</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
-<pre><code>     name            primary_wish     backup_wish gift_complexity
-1 Abagail           Building sets     LEGO blocks    Complex Gift
-2   Abbey                  Yo-yos Building blocks     Simple Gift
-3   Abbey         Stuffed animals     Teddy bears    Complex Gift
-4    Abby                  Yo-yos  Jigsaw puzzles     Simple Gift
-5  Abdiel Toy musical instruments     LEGO blocks    Complex Gift
-  workshop_assignment
-1   Learning Workshop
-2    General Workshop
-3    General Workshop
-4    General Workshop
-5   Learning Workshop</code></pre>
+<pre><code>       name            primary_wish             backup_wish favorite_color
+1   Abagail           Building sets             LEGO blocks           Blue
+2     Abbey                  Yo-yos         Building blocks           Blue
+3     Abbey         Stuffed animals             Teddy bears          White
+4      Abby                  Yo-yos          Jigsaw puzzles         Yellow
+5    Abdiel Toy musical instruments             LEGO blocks          Brown
+6     Abdul             Teddy bears                Play-Doh          White
+7  Abdullah Toy musical instruments Toy musical instruments          Brown
+8      Abel            Rubiks cubes           Building sets          Green
+9  Abelardo        Toy kitchen sets             Teddy bears           Pink
+10    Abner             LEGO blocks              Jump ropes          White
+   n_colors gift_complexity workshop_assignment
+1         1    Complex Gift   Learning Workshop
+2         5     Simple Gift    General Workshop
+3         4    Complex Gift    General Workshop
+4         3     Simple Gift    General Workshop
+5         2    Complex Gift   Learning Workshop
+6         3    Complex Gift    General Workshop
+7         4    Complex Gift   Learning Workshop
+8         4    Complex Gift   Learning Workshop
+9         1    Complex Gift    General Workshop
+10        2    Complex Gift   Learning Workshop</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>0.053 sec elapsed</code></pre>
+<pre><code>0.081 sec elapsed</code></pre>
 </div>
 </div>
 </section>
