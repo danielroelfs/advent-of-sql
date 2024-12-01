@@ -1,0 +1,232 @@
+---
+title: "2024"
+execute:
+  message: false
+  warning: false
+---
+
+```{r}
+#| label: setup
+#| include: false
+
+library(tidyverse)
+library(DBI)
+library(tictoc)
+
+xaringanExtra::use_panelset()
+```
+
+```{r}
+#| label: index-table
+#| echo: false
+
+challenge_done <- fs::dir_ls("./2024/", recurse = TRUE) |>
+  str_subset("query") |>
+  str_extract("(?<=query_day)(.*)(?=.sql)") |>
+  as.numeric()
+
+one_done <- challenge_done
+none_done <- setdiff(seq(25), challenge_done)
+
+htmltools::tags$style(
+  str_c(collapse = "\n",
+    c(
+      glue::glue(
+        "#panelset_day-[one_done] {color: #EBB626 !important;}",
+        .open = "[", .close = "]"
+      ),
+      glue::glue(
+        "#panelset_day-[none_done] {color: #D63131 !important;}",
+        .open = "[", .close = "]"
+      )
+    )
+  )
+)
+```
+
+```{r}
+#| label: connect-db
+#| echo: false
+
+con <- DBI::dbConnect(RPostgres::Postgres(),
+    host=Sys.getenv("DBHOST"),
+    port=Sys.getenv("DBPORT"),
+    user=Sys.getenv("DBUSER"),
+    password=Sys.getenv("DBPASS"),
+    dbname=Sys.getenv("DBNAME"),
+)
+
+knitr::opts_chunk$set(connection = "con")
+```
+
+:::: {.panelset}
+
+::: {.panel}
+
+## Day 1 {.panel-name}
+
+
+**Day 1**
+
+```{r, code=readLines("./2024/day_01/query_day01.sql")}
+#| label: code-day01
+#| eval: false
+```
+
+```{r}
+#| label: day01
+#| echo: false
+#| cache: false
+
+tic()
+print(dbGetQuery(con, statement = read_file("./2024/day_01/query_day01.sql")))
+toc()
+```
+
+:::
+
+::: {.panel}
+
+# Day 2 {.panel-name}
+
+:::
+
+::: {.panel}
+
+# Day 3 {.panel-name}
+
+:::
+
+::: {.panel}
+
+# Day 4 {.panel-name}
+
+:::
+
+::: {.panel}
+
+# Day 5 {.panel-name}
+
+:::
+
+::: {.panel}
+
+# Day 6 {.panel-name}
+
+:::
+
+::: {.panel}
+
+# Day 7 {.panel-name}
+
+:::
+
+::: {.panel}
+
+# Day 8 {.panel-name}
+
+:::
+
+::: {.panel}
+
+# Day 9 {.panel-name}
+
+:::
+
+::: {.panel}
+
+# Day 10 {.panel-name}
+
+:::
+
+::: {.panel}
+
+# Day 11 {.panel-name}
+
+:::
+
+::: {.panel}
+
+# Day 12 {.panel-name}
+
+:::
+
+::: {.panel}
+
+# Day 13 {.panel-name}
+
+:::
+
+::: {.panel}
+
+# Day 14 {.panel-name}
+
+:::
+
+::: {.panel}
+
+# Day 15 {.panel-name}
+
+:::
+
+::: {.panel}
+
+# Day 16 {.panel-name}
+
+:::
+
+::: {.panel}
+
+# Day 17 {.panel-name}
+
+:::
+
+::: {.panel}
+
+# Day 18 {.panel-name}
+
+:::
+
+::: {.panel}
+
+# Day 19 {.panel-name}
+
+:::
+
+::: {.panel}
+
+# Day 20 {.panel-name}
+
+:::
+
+::: {.panel}
+
+# Day 21 {.panel-name}
+
+:::
+
+::: {.panel}
+
+# Day 22 {.panel-name}
+
+:::
+
+::: {.panel}
+
+# Day 23 {.panel-name}
+
+:::
+
+::: {.panel}
+
+# Day 24 {.panel-name}
+
+:::
+
+::: {.panel}
+
+# Day 25 {.panel-name}
+
+:::
+
+::::

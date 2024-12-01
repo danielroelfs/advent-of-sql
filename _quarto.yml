@@ -1,0 +1,25 @@
+project:
+  type: website
+  output-dir: docs
+
+website:
+  title: "Advent of SQL"
+  favicon: favicon.ico
+  search: false
+  
+  navbar:
+    pinned: true
+    left:
+      - index.qmd
+      - about.qmd
+
+format:
+  html:
+    page-layout: full
+    grid:
+      body-width: 500px
+    theme:
+      - sass/main.scss
+    highlight-style: gruvbox
+    number-sections: false
+    toc: false

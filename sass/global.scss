@@ -1,0 +1,129 @@
+/*-- scss:rules --*/
+
+body {
+  font-family: $main-font !important;
+  font-size: $main-font-size !important;
+  color: $main-font-color !important;
+  border-bottom: $thick-line;
+}
+@media (max-width: 1200px) {
+  body {
+    font-size: $main-font-portables !important;
+    margin-left: -4vw !important;
+    border-bottom: 0;
+  }
+}
+
+main.content {
+  hyphens: auto;
+  max-width: 70vw !important;
+}
+@media (max-width: 1200px) {
+  main.content {
+    width: 95vw;
+    max-width: 100vw !important;
+  }
+}
+
+.navbar-container {
+  border-bottom: $thick-line;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: $header-font;
+  font-weight: $header-weight;
+}
+
+h1 {
+  font-size: 160% !important;
+}
+
+h2 {
+  font-size: 120% !important;
+  border-bottom: none !important;
+}
+
+h3 {
+  font-size: 100% !important;
+}
+
+// Links
+main.content { 
+  & a {
+    opacity: 80%;
+    border-radius: 3px;
+    text-decoration: none;
+    color: darken($link-color, 20%);
+    padding: 2px;
+  }
+
+  & a:hover {
+    opacity: 100%;
+    color: lighten($main-font-color, 20%);
+    background: rgba($primary-accent, 0.5);
+    border-radius: 3px;
+  }
+
+  & a, & a:hover {
+    transition: background 0.5s;
+  }
+
+  & p a:after  {
+    position: relative;
+    content: "°" !important;
+    font-size: 90%;
+    color: darken($link-color, 20%);
+    margin-left: 0.10em;
+    top: -0.10em;
+  }
+}
+
+nav.navbar {
+  color: $main-font-color !important;
+  background-color: $page-background;
+  padding-top: 0;
+  & .navbar-brand , & .nav-link, & .nav-link.active {
+    color: $main-font-color;
+  }
+  & .navbar-brand {
+    font-style: italic;
+    font-weight: 700;
+  }
+  & button.navbar-toggler {
+    background-color: darken($page-background, 10%);
+  }
+}
+
+#quarto-header>nav {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+ul.navbar-nav {
+  text-transform: lowercase;
+  li.nav-item:hover {
+    background-color: rgba($primary-accent, 0.5);
+    transition: background 0.5s;
+  }
+}
+
+div.sourceCode {
+  background-color: darken($page-background, 5%) !important;
+}
+
+pre {
+  & code {
+    font-size: 80% !important;
+  }
+}
+
+.panel-tab {
+  font-size: 90%;
+  flex: 1 0 20%;
+  padding: 0 !important;
+  text-align: center;
+  & a {
+    text-transform: lowercase;
+    background-color: transparent !important;
+  }
+}
