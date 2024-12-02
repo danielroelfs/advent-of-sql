@@ -59,4 +59,4 @@ FROM children AS ch
 INNER JOIN wishes AS wsh ON ch.child_id = wsh.child_id
 INNER JOIN complexity AS cmplx ON wsh.primary_wish = cmplx.toy_name
 ORDER BY ch.name
-LIMIT 10;
+LIMIT 5;

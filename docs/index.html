@@ -151,7 +151,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <div class="cell-output-display">
 <style>#panelset_001_day-1 {color: #409327 !important;}
-#panelset_001_day-2 {color: #D63131 !important;}
+#panelset_001_day-2 {color: #409327 !important;}
 #panelset_001_day-3 {color: #D63131 !important;}
 #panelset_001_day-4 {color: #D63131 !important;}
 #panelset_001_day-5 {color: #D63131 !important;}
@@ -243,40 +243,60 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a>INNER JOIN wishes AS wsh ON ch.child_id <span class="ot">=</span> wsh.child_id</span>
 <span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a>INNER JOIN complexity AS cmplx ON wsh.primary_wish <span class="ot">=</span> cmplx.toy_name</span>
 <span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a>ORDER BY ch.name</span>
-<span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a>LIMIT <span class="dv">10</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a>LIMIT <span class="dv">5</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
-<pre><code>       name            primary_wish             backup_wish favorite_color
-1   Abagail           Building sets             LEGO blocks           Blue
-2     Abbey                  Yo-yos         Building blocks           Blue
-3     Abbey         Stuffed animals             Teddy bears          White
-4      Abby                  Yo-yos          Jigsaw puzzles         Yellow
-5    Abdiel Toy musical instruments             LEGO blocks          Brown
-6     Abdul             Teddy bears                Play-Doh          White
-7  Abdullah Toy musical instruments Toy musical instruments          Brown
-8      Abel            Rubiks cubes           Building sets          Green
-9  Abelardo        Toy kitchen sets             Teddy bears           Pink
-10    Abner             LEGO blocks              Jump ropes          White
-   n_colors gift_complexity workshop_assignment
-1         1    Complex Gift   Learning Workshop
-2         5     Simple Gift    General Workshop
-3         4    Complex Gift    General Workshop
-4         3     Simple Gift    General Workshop
-5         2    Complex Gift   Learning Workshop
-6         3    Complex Gift    General Workshop
-7         4    Complex Gift   Learning Workshop
-8         4    Complex Gift   Learning Workshop
-9         1    Complex Gift    General Workshop
-10        2    Complex Gift   Learning Workshop</code></pre>
+<pre><code>     name            primary_wish     backup_wish favorite_color n_colors
+1 Abagail           Building sets     LEGO blocks           Blue        1
+2   Abbey         Stuffed animals     Teddy bears          White        4
+3   Abbey                  Yo-yos Building blocks           Blue        5
+4    Abby                  Yo-yos  Jigsaw puzzles         Yellow        3
+5  Abdiel Toy musical instruments     LEGO blocks          Brown        2
+  gift_complexity workshop_assignment
+1    Complex Gift   Learning Workshop
+2    Complex Gift    General Workshop
+3     Simple Gift    General Workshop
+4     Simple Gift    General Workshop
+5    Complex Gift   Learning Workshop</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>0.081 sec elapsed</code></pre>
+<pre><code>0.059 sec elapsed</code></pre>
 </div>
 </div>
 </section>
 <section id="day-2" class="level1 panel-name panel">
 <h1 class="panel-name">Day 2</h1>
+<p><strong>Day 2</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>WITH combined <span class="fu">AS</span> (</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    SELECT <span class="sc">*</span> FROM letters_a</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    UNION ALL</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    SELECT <span class="sc">*</span> FROM letters_b</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>),</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>decoded <span class="fu">AS</span> (</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    SELECT</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>        <span class="sc">*</span>,</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>        <span class="fu">CHR</span>(value) AS string</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    FROM combined</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    WHERE</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>        (value BETWEEN <span class="dv">65</span> AND <span class="dv">90</span>)</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>        <span class="fu">OR</span> (value BETWEEN <span class="dv">97</span> AND <span class="dv">122</span>)</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>        <span class="fu">OR</span> (value <span class="fu">IN</span> (<span class="dv">32</span>, <span class="dv">33</span>, <span class="dv">44</span>, <span class="dv">46</span>))</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>SELECT <span class="fu">STRING_AGG</span>(string, <span class="st">''</span>) FROM decoded;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>                                                                                           string_agg
+1 Dear Santa, I hope this letter finds you well in the North Pole! I want a SQL course for Christmas!</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>0.007 sec elapsed</code></pre>
+</div>
+</div>
 </section>
 <section id="day-3" class="level1 panel-name panel">
 <h1 class="panel-name">Day 3</h1>
