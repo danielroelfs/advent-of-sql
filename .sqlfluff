@@ -1,2 +1,5 @@
 [sqlfluff]
 dialect = postgres
+
+[sqlfluff:rules:capitalisation.functions]
+extended_capitalisation_policy = upper

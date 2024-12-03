@@ -74,7 +74,7 @@ knitr::opts_chunk$set(connection = "con")
 ```{r}
 #| label: day01
 #| echo: false
-#| cache: false
+#| cache: true
 
 tic()
 print(dbGetQuery(con, statement = read_file("./2024/day_01/query_day01.sql")))
@@ -98,7 +98,7 @@ toc()
 ```{r}
 #| label: day02
 #| echo: false
-#| cache: false
+#| cache: true
 
 tic()
 print(dbGetQuery(con, statement = read_file("./2024/day_02/query_day02.sql")))
@@ -110,6 +110,23 @@ toc()
 ::: {.panel}
 
 # Day 3 {.panel-name}
+
+**Day 3**
+
+```{r, code=readLines("./2024/day_03/query_day03.sql")}
+#| label: code-day03
+#| eval: false
+```
+
+```{r}
+#| label: day03
+#| echo: false
+#| cache: true
+
+tic()
+print(dbGetQuery(con, statement = read_file("./2024/day_03/query_day03.sql")))
+toc()
+```
 
 :::
 

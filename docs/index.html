@@ -152,7 +152,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell-output-display">
 <style>#panelset_001_day-1 {color: #409327 !important;}
 #panelset_001_day-2 {color: #409327 !important;}
-#panelset_001_day-3 {color: #D63131 !important;}
+#panelset_001_day-3 {color: #409327 !important;}
 #panelset_001_day-4 {color: #D63131 !important;}
 #panelset_001_day-5 {color: #D63131 !important;}
 #panelset_001_day-6 {color: #D63131 !important;}
@@ -261,7 +261,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 5    Complex Gift   Learning Workshop</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>0.059 sec elapsed</code></pre>
+<pre><code>0.058 sec elapsed</code></pre>
 </div>
 </div>
 </section>
@@ -300,6 +300,41 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="day-3" class="level1 panel-name panel">
 <h1 class="panel-name">Day 3</h1>
+<p><strong>Day 3</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="sc">--</span> noqa<span class="sc">:</span> disable<span class="ot">=</span>LT05</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>WITH parsed_menu <span class="fu">AS</span> (</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    SELECT</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>        (<span class="fu">XPATH</span>(<span class="st">'//food_item_id/text()'</span>, menu_data))<span class="sc">::</span>text [] AS array_food_item,</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>        CASE</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>            WHEN <span class="fu">ARRAY_LENGTH</span>(<span class="fu">XPATH</span>(<span class="st">'//total_present/text()'</span>, menu_data), <span class="dv">1</span>) <span class="sc">&gt;</span> <span class="dv">0</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>                <span class="fu">THEN</span> (<span class="fu">XPATH</span>(<span class="st">'//total_present/text()'</span>, menu_data))[<span class="dv">1</span>]<span class="sc">::</span>text<span class="sc">::</span>integer</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>            WHEN <span class="fu">ARRAY_LENGTH</span>(<span class="fu">XPATH</span>(<span class="st">'//total_count/text()'</span>, menu_data), <span class="dv">1</span>) <span class="sc">&gt;</span> <span class="dv">0</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>                <span class="fu">THEN</span> (<span class="fu">XPATH</span>(<span class="st">'//total_count/text()'</span>, menu_data))[<span class="dv">1</span>]<span class="sc">::</span>text<span class="sc">::</span>integer</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>            WHEN <span class="fu">ARRAY_LENGTH</span>(<span class="fu">XPATH</span>(<span class="st">'//total_guests/text()'</span>, menu_data), <span class="dv">1</span>) <span class="sc">&gt;</span> <span class="dv">0</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>                <span class="fu">THEN</span> (<span class="fu">XPATH</span>(<span class="st">'//total_guests/text()'</span>, menu_data))[<span class="dv">1</span>]<span class="sc">::</span>text<span class="sc">::</span>integer</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>        END AS n_guests</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>    FROM christmas_menus</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>SELECT</span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">UNNEST</span>(array_food_item) AS food_item,</span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">COUNT</span>(<span class="sc">*</span>) AS n</span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>FROM parsed_menu</span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>WHERE n_guests <span class="sc">&gt;</span> <span class="dv">78</span></span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>GROUP BY food_item</span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>ORDER BY n DESC</span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>LIMIT <span class="dv">1</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>  food_item   n
+1       493 117</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>1.455 sec elapsed</code></pre>
+</div>
+</div>
 </section>
 <section id="day-4" class="level1 panel-name panel">
 <h1 class="panel-name">Day 4</h1>
