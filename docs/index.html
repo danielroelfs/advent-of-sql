@@ -154,8 +154,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 #panelset_001_day-2 {color: #409327 !important;}
 #panelset_001_day-3 {color: #409327 !important;}
 #panelset_001_day-4 {color: #409327 !important;}
-#panelset_001_day-5 {color: #D63131 !important;}
-#panelset_001_day-6 {color: #D63131 !important;}
+#panelset_001_day-5 {color: #409327 !important;}
+#panelset_001_day-6 {color: #409327 !important;}
 #panelset_001_day-7 {color: #D63131 !important;}
 #panelset_001_day-8 {color: #D63131 !important;}
 #panelset_001_day-9 {color: #D63131 !important;}
@@ -382,9 +382,72 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="day-5" class="level1 panel-name panel">
 <h1 class="panel-name">Day 5</h1>
+<p><strong>Day 5</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>WITH previous <span class="fu">AS</span> (</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    SELECT</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>        production_date,</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>        toys_produced,</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>        <span class="fu">LAG</span>(toys_produced, <span class="dv">1</span>, <span class="cn">NULL</span>)</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>            <span class="fu">OVER</span> (ORDER BY production_date)</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>        AS previous_day_production</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>    FROM toy_production</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>SELECT</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>    tp.production_date,</span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>    pr.toys_produced,</span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>    pr.previous_day_production,</span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>    tp.toys_produced <span class="sc">-</span> pr.previous_day_production AS production_change,</span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ROUND</span>(</span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>        (tp.toys_produced <span class="sc">-</span> pr.previous_day_production)</span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>        <span class="sc">/</span> (pr.previous_day_production <span class="sc">*</span> <span class="fl">1.0</span>) <span class="sc">*</span> <span class="fl">100.0</span>, <span class="dv">2</span></span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>    ) AS production_change_percentage</span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>FROM toy_production AS tp</span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>INNER JOIN previous AS pr ON tp.production_date <span class="ot">=</span> pr.production_date</span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a>WHERE pr.previous_day_production IS NOT <span class="cn">NULL</span></span>
+<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a>ORDER BY production_change_percentage DESC</span>
+<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a>LIMIT <span class="dv">1</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>  production_date toys_produced previous_day_production production_change
+1      2017-03-20          2327                       3              2324
+  production_change_percentage
+1                     77466.67</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>0.068 sec elapsed</code></pre>
+</div>
+</div>
 </section>
 <section id="day-6" class="level1 panel-name panel">
 <h1 class="panel-name">Day 6</h1>
+<p><strong>Day 6</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>SELECT</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>    ch.name AS child_name,</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>    gi.name AS gift_name,</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>    gi.price AS gift_price</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>FROM children AS ch</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>INNER JOIN gifts AS gi ON ch.child_id <span class="ot">=</span> gi.child_id</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>WHERE gi.price <span class="sc">&gt;</span> (SELECT <span class="fu">AVG</span>(mp.price) FROM gifts AS mp)</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>ORDER BY gi.price ASC</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>LIMIT <span class="dv">5</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>  child_name        gift_name gift_price
+1     Hobart        art easel     497.44
+2    Lindsey wizard chess set     497.52
+3       Reba   bubble machine     497.89
+4      Reina    talking globe     497.91
+5    Brenden    talking globe     498.25</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>0.011 sec elapsed</code></pre>
+</div>
+</div>
 </section>
 <section id="day-7" class="level1 panel-name panel">
 <h1 class="panel-name">Day 7</h1>
