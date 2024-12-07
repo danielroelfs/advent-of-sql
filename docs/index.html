@@ -156,7 +156,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 #panelset_001_day-4 {color: #409327 !important;}
 #panelset_001_day-5 {color: #409327 !important;}
 #panelset_001_day-6 {color: #409327 !important;}
-#panelset_001_day-7 {color: #D63131 !important;}
+#panelset_001_day-7 {color: #409327 !important;}
 #panelset_001_day-8 {color: #D63131 !important;}
 #panelset_001_day-9 {color: #D63131 !important;}
 #panelset_001_day-10 {color: #D63131 !important;}
@@ -451,6 +451,47 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="day-7" class="level1 panel-name panel">
 <h1 class="panel-name">Day 7</h1>
+<p><strong>Day 7</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>WITH min_experience <span class="fu">AS</span> (</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>    SELECT DISTINCT <span class="fu">ON</span> (primary_skill)</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>        elf_id,</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>        years_experience,</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>        primary_skill</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>    FROM workshop_elves</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>    ORDER BY primary_skill ASC, years_experience ASC, elf_id ASC</span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>),</span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>max_experience <span class="fu">AS</span> (</span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>    SELECT DISTINCT <span class="fu">ON</span> (primary_skill)</span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>        elf_id,</span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>        years_experience,</span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>        primary_skill</span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a>    FROM workshop_elves</span>
+<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a>    ORDER BY primary_skill ASC, years_experience DESC, elf_id ASC</span>
+<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a>SELECT</span>
+<span id="cb19-20"><a href="#cb19-20" aria-hidden="true" tabindex="-1"></a>    max_exp.elf_id AS elf_1_id,</span>
+<span id="cb19-21"><a href="#cb19-21" aria-hidden="true" tabindex="-1"></a>    min_exp.elf_id AS elf_2_id,</span>
+<span id="cb19-22"><a href="#cb19-22" aria-hidden="true" tabindex="-1"></a>    max_exp.primary_skill AS shared_skill</span>
+<span id="cb19-23"><a href="#cb19-23" aria-hidden="true" tabindex="-1"></a>FROM min_experience AS min_exp</span>
+<span id="cb19-24"><a href="#cb19-24" aria-hidden="true" tabindex="-1"></a>INNER JOIN max_experience AS max_exp</span>
+<span id="cb19-25"><a href="#cb19-25" aria-hidden="true" tabindex="-1"></a>    ON min_exp.primary_skill <span class="ot">=</span> max_exp.primary_skill</span>
+<span id="cb19-26"><a href="#cb19-26" aria-hidden="true" tabindex="-1"></a>ORDER BY min_exp.primary_skill</span>
+<span id="cb19-27"><a href="#cb19-27" aria-hidden="true" tabindex="-1"></a>LIMIT <span class="dv">3</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>  elf_1_id elf_2_id  shared_skill
+1     4153     3611  Gift sorting
+2    10497     1016 Gift wrapping
+3       50    13551    Toy making</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>0.339 sec elapsed</code></pre>
+</div>
+</div>
 </section>
 <section id="day-8" class="level1 panel-name panel">
 <h1 class="panel-name">Day 8</h1>
