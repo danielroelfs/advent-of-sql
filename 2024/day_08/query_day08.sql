@@ -14,8 +14,7 @@ WITH RECURSIVE managers AS (
         ON s2.manager_id = mgmt.staff_id
 )
 
-SELECT
-    COUNT(*) AS n
+SELECT COUNT(*) AS n
 FROM managers
 GROUP BY staff_id
 ORDER BY n DESC
