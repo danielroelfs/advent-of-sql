@@ -157,8 +157,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 #panelset_001_day-5 {color: #409327 !important;}
 #panelset_001_day-6 {color: #409327 !important;}
 #panelset_001_day-7 {color: #409327 !important;}
-#panelset_001_day-8 {color: #D63131 !important;}
-#panelset_001_day-9 {color: #D63131 !important;}
+#panelset_001_day-8 {color: #409327 !important;}
+#panelset_001_day-9 {color: #409327 !important;}
 #panelset_001_day-10 {color: #D63131 !important;}
 #panelset_001_day-11 {color: #D63131 !important;}
 #panelset_001_day-12 {color: #D63131 !important;}
@@ -247,21 +247,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
-<pre><code>     name            primary_wish     backup_wish favorite_color n_colors
-1 Abagail           Building sets     LEGO blocks           Blue        1
-2   Abbey         Stuffed animals     Teddy bears          White        4
-3   Abbey                  Yo-yos Building blocks           Blue        5
-4    Abby                  Yo-yos  Jigsaw puzzles         Yellow        3
-5  Abdiel Toy musical instruments     LEGO blocks          Brown        2
-  gift_complexity workshop_assignment
-1    Complex Gift   Learning Workshop
-2    Complex Gift    General Workshop
-3     Simple Gift    General Workshop
-4     Simple Gift    General Workshop
-5    Complex Gift   Learning Workshop</code></pre>
+<pre><code>      name            primary_wish             backup_wish favorite_color
+1    Abbie            Barbie dolls Toy musical instruments          Green
+2 Abbigail              Jump ropes          Action figures         Yellow
+3 Abdullah                  Yo-yos                  Yo-yos         Yellow
+4 Abdullah Toy musical instruments            Barbie dolls           Pink
+5 Abelardo              Toy trains             Board games         Yellow
+  n_colors gift_complexity workshop_assignment
+1        5   Moderate Gift    General Workshop
+2        1     Simple Gift    Outdoor Workshop
+3        1     Simple Gift    General Workshop
+4        2    Complex Gift   Learning Workshop
+5        4    Complex Gift    General Workshop</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>0.058 sec elapsed</code></pre>
+<pre><code>0.043 sec elapsed</code></pre>
 </div>
 </div>
 </section>
@@ -332,7 +332,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 1       493 117</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>1.455 sec elapsed</code></pre>
+<pre><code>1.487 sec elapsed</code></pre>
 </div>
 </div>
 </section>
@@ -376,7 +376,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 1   2726    98         2       0</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>0.155 sec elapsed</code></pre>
+<pre><code>0.147 sec elapsed</code></pre>
 </div>
 </div>
 </section>
@@ -417,7 +417,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 1                     77466.67</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>0.068 sec elapsed</code></pre>
+<pre><code>0.04 sec elapsed</code></pre>
 </div>
 </div>
 </section>
@@ -445,7 +445,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 5    Brenden    talking globe     498.25</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>0.011 sec elapsed</code></pre>
+<pre><code>0.009 sec elapsed</code></pre>
 </div>
 </div>
 </section>
@@ -489,15 +489,88 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 3       50    13551    Toy making</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>0.339 sec elapsed</code></pre>
+<pre><code>0.352 sec elapsed</code></pre>
 </div>
 </div>
 </section>
 <section id="day-8" class="level1 panel-name panel">
 <h1 class="panel-name">Day 8</h1>
+<p><strong>Day 8</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>WITH RECURSIVE managers <span class="fu">AS</span> (</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>    SELECT</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>        s1.staff_id,</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>        s1.staff_name,</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>        s1.manager_id</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>    FROM staff AS s1</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>    UNION ALL</span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>    SELECT</span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>        s2.staff_id,</span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>        s2.staff_name,</span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>        s2.manager_id</span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>    FROM staff AS s2</span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a>    INNER JOIN managers AS mgmt</span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a>        ON <span class="at">s2.manager_id =</span> mgmt.staff_id</span>
+<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a>SELECT</span>
+<span id="cb22-18"><a href="#cb22-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">COUNT</span>(<span class="sc">*</span>) AS n</span>
+<span id="cb22-19"><a href="#cb22-19" aria-hidden="true" tabindex="-1"></a>FROM managers</span>
+<span id="cb22-20"><a href="#cb22-20" aria-hidden="true" tabindex="-1"></a>GROUP BY staff_id</span>
+<span id="cb22-21"><a href="#cb22-21" aria-hidden="true" tabindex="-1"></a>ORDER BY n DESC</span>
+<span id="cb22-22"><a href="#cb22-22" aria-hidden="true" tabindex="-1"></a>LIMIT <span class="dv">1</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>   n
+1 24</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>1.843 sec elapsed</code></pre>
+</div>
+</div>
 </section>
 <section id="day-9" class="level1 panel-name panel">
 <h1 class="panel-name">Day 9</h1>
+<p><strong>Day 9</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>WITH avg_exercise <span class="fu">AS</span> (</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>    SELECT</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>        reindeer_id,</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>        exercise_name,</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>        <span class="fu">AVG</span>(speed_record) AS avg_speed</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>    FROM training_sessions</span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>    GROUP BY reindeer_id, exercise_name</span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>),</span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>max_avg_speed <span class="fu">AS</span> (</span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>    SELECT</span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>        reindeer_id,</span>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a>        <span class="fu">MAX</span>(avg_speed) AS max_avg_speed</span>
+<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a>    FROM avg_exercise</span>
+<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a>    GROUP BY reindeer_id</span>
+<span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb25-17"><a href="#cb25-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-18"><a href="#cb25-18" aria-hidden="true" tabindex="-1"></a>SELECT</span>
+<span id="cb25-19"><a href="#cb25-19" aria-hidden="true" tabindex="-1"></a>    re.reindeer_name,</span>
+<span id="cb25-20"><a href="#cb25-20" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ROUND</span>(mas.max_avg_speed, <span class="dv">2</span>) AS top_speed</span>
+<span id="cb25-21"><a href="#cb25-21" aria-hidden="true" tabindex="-1"></a>FROM max_avg_speed AS mas</span>
+<span id="cb25-22"><a href="#cb25-22" aria-hidden="true" tabindex="-1"></a>INNER JOIN reindeers AS re ON mas.reindeer_id <span class="ot">=</span> re.reindeer_id</span>
+<span id="cb25-23"><a href="#cb25-23" aria-hidden="true" tabindex="-1"></a>WHERE re.reindeer_name <span class="sc">!=</span> <span class="st">'Rudolph'</span></span>
+<span id="cb25-24"><a href="#cb25-24" aria-hidden="true" tabindex="-1"></a>ORDER BY top_speed DESC</span>
+<span id="cb25-25"><a href="#cb25-25" aria-hidden="true" tabindex="-1"></a>LIMIT <span class="dv">3</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>  reindeer_name top_speed
+1         Cupid     88.64
+2       Blitzen     88.38
+3         Vixen     88.01</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>0.007 sec elapsed</code></pre>
+</div>
+</div>
 </section>
 <section id="day-10" class="level1 panel-name panel">
 <h1 class="panel-name">Day 10</h1>
