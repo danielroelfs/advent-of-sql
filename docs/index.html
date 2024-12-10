@@ -159,7 +159,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 #panelset_001_day-7 {color: #409327 !important;}
 #panelset_001_day-8 {color: #409327 !important;}
 #panelset_001_day-9 {color: #409327 !important;}
-#panelset_001_day-10 {color: #D63131 !important;}
+#panelset_001_day-10 {color: #409327 !important;}
 #panelset_001_day-11 {color: #D63131 !important;}
 #panelset_001_day-12 {color: #D63131 !important;}
 #panelset_001_day-13 {color: #D63131 !important;}
@@ -573,6 +573,42 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="day-10" class="level1 panel-name panel">
 <h1 class="panel-name">Day 10</h1>
+<p><strong>Day 10</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>WITH drinks <span class="fu">AS</span> (</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>    SELECT</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>        date,</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>        <span class="fu">SUM</span>(</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>            CASE WHEN <span class="at">drink_name =</span> <span class="st">'Eggnog'</span> THEN quantity ELSE <span class="dv">0</span> END</span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>        ) AS eggnog,</span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>        <span class="fu">SUM</span>(</span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>            CASE WHEN <span class="at">drink_name =</span> <span class="st">'Hot Cocoa'</span> THEN quantity ELSE <span class="dv">0</span> END</span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>        ) AS hot_cocoa,</span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>        <span class="fu">SUM</span>(</span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a>            CASE</span>
+<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a>                WHEN <span class="at">drink_name =</span> <span class="st">'Peppermint Schnapps'</span> THEN quantity ELSE <span class="dv">0</span></span>
+<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a>            END</span>
+<span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a>        ) AS peppermint_schnapps</span>
+<span id="cb28-15"><a href="#cb28-15" aria-hidden="true" tabindex="-1"></a>    FROM drinks</span>
+<span id="cb28-16"><a href="#cb28-16" aria-hidden="true" tabindex="-1"></a>    GROUP BY date</span>
+<span id="cb28-17"><a href="#cb28-17" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb28-18"><a href="#cb28-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-19"><a href="#cb28-19" aria-hidden="true" tabindex="-1"></a>SELECT date FROM drinks</span>
+<span id="cb28-20"><a href="#cb28-20" aria-hidden="true" tabindex="-1"></a>WHERE</span>
+<span id="cb28-21"><a href="#cb28-21" aria-hidden="true" tabindex="-1"></a>    <span class="dv">1</span> <span class="ot">=</span> <span class="dv">1</span></span>
+<span id="cb28-22"><a href="#cb28-22" aria-hidden="true" tabindex="-1"></a>    AND eggnog <span class="ot">=</span> <span class="dv">198</span></span>
+<span id="cb28-23"><a href="#cb28-23" aria-hidden="true" tabindex="-1"></a>    AND hot_cocoa <span class="ot">=</span> <span class="dv">38</span></span>
+<span id="cb28-24"><a href="#cb28-24" aria-hidden="true" tabindex="-1"></a>    AND peppermint_schnapps <span class="ot">=</span> <span class="dv">298</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>        date
+1 2024-03-14</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>0.055 sec elapsed</code></pre>
+</div>
+</div>
 </section>
 <section id="day-11" class="level1 panel-name panel">
 <h1 class="panel-name">Day 11</h1>
