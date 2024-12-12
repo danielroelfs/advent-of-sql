@@ -160,8 +160,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 #panelset_001_day-8 {color: #409327 !important;}
 #panelset_001_day-9 {color: #409327 !important;}
 #panelset_001_day-10 {color: #409327 !important;}
-#panelset_001_day-11 {color: #D63131 !important;}
-#panelset_001_day-12 {color: #D63131 !important;}
+#panelset_001_day-11 {color: #409327 !important;}
+#panelset_001_day-12 {color: #409327 !important;}
 #panelset_001_day-13 {color: #D63131 !important;}
 #panelset_001_day-14 {color: #D63131 !important;}
 #panelset_001_day-15 {color: #D63131 !important;}
@@ -612,9 +612,92 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="day-11" class="level1 panel-name panel">
 <h1 class="panel-name">Day 11</h1>
+<p><strong>Day 11</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>SELECT</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>    field_name,</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>    harvest_year,</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>    season,</span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ROUND</span>(<span class="fu">AVG</span>(trees_harvested) <span class="fu">OVER</span> (</span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>        PARTITION BY field_name</span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>        ORDER BY</span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>            harvest_year,</span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>            CASE</span>
+<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a>                WHEN <span class="at">season =</span> <span class="st">'Spring'</span> THEN <span class="dv">1</span></span>
+<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a>                WHEN <span class="at">season =</span> <span class="st">'Summer'</span> THEN <span class="dv">2</span></span>
+<span id="cb31-12"><a href="#cb31-12" aria-hidden="true" tabindex="-1"></a>                WHEN <span class="at">season =</span> <span class="st">'Fall'</span> THEN <span class="dv">3</span></span>
+<span id="cb31-13"><a href="#cb31-13" aria-hidden="true" tabindex="-1"></a>                WHEN <span class="at">season =</span> <span class="st">'Winter'</span> THEN <span class="dv">4</span></span>
+<span id="cb31-14"><a href="#cb31-14" aria-hidden="true" tabindex="-1"></a>            END</span>
+<span id="cb31-15"><a href="#cb31-15" aria-hidden="true" tabindex="-1"></a>        ROWS BETWEEN <span class="dv">2</span> PRECEDING</span>
+<span id="cb31-16"><a href="#cb31-16" aria-hidden="true" tabindex="-1"></a>        AND CURRENT ROW</span>
+<span id="cb31-17"><a href="#cb31-17" aria-hidden="true" tabindex="-1"></a>    ), <span class="dv">2</span>) AS moving_ave</span>
+<span id="cb31-18"><a href="#cb31-18" aria-hidden="true" tabindex="-1"></a>FROM</span>
+<span id="cb31-19"><a href="#cb31-19" aria-hidden="true" tabindex="-1"></a>    treeharvests</span>
+<span id="cb31-20"><a href="#cb31-20" aria-hidden="true" tabindex="-1"></a>ORDER BY</span>
+<span id="cb31-21"><a href="#cb31-21" aria-hidden="true" tabindex="-1"></a>    moving_ave DESC</span>
+<span id="cb31-22"><a href="#cb31-22" aria-hidden="true" tabindex="-1"></a>LIMIT <span class="dv">1</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>           field_name harvest_year season moving_ave
+1 Northern Gardens 62         2024 Winter     327.67</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>0.055 sec elapsed</code></pre>
+</div>
+</div>
 </section>
 <section id="day-12" class="level1 panel-name panel">
 <h1 class="panel-name">Day 12</h1>
+<p><strong>Day 12</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>WITH gift_counts <span class="fu">AS</span> (</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>    SELECT</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>        gi.gift_name,</span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>        <span class="fu">COUNT</span>(<span class="sc">*</span>) AS n_req</span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>    FROM gift_requests AS req</span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>    LEFT JOIN gifts AS gi ON <span class="at">req.gift_id =</span> gi.gift_id</span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>    GROUP BY gi.gift_name</span>
+<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a>SELECT</span>
+<span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a>    gift_name,</span>
+<span id="cb34-12"><a href="#cb34-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ROUND</span>(<span class="fu">PERCENT_RANK</span>() <span class="fu">OVER</span> (</span>
+<span id="cb34-13"><a href="#cb34-13" aria-hidden="true" tabindex="-1"></a>        ORDER BY n_req</span>
+<span id="cb34-14"><a href="#cb34-14" aria-hidden="true" tabindex="-1"></a>    )<span class="sc">::</span>numeric, <span class="dv">2</span>) AS percentile</span>
+<span id="cb34-15"><a href="#cb34-15" aria-hidden="true" tabindex="-1"></a>FROM</span>
+<span id="cb34-16"><a href="#cb34-16" aria-hidden="true" tabindex="-1"></a>    gift_counts</span>
+<span id="cb34-17"><a href="#cb34-17" aria-hidden="true" tabindex="-1"></a>ORDER BY percentile DESC, gift_name ASC</span>
+<span id="cb34-18"><a href="#cb34-18" aria-hidden="true" tabindex="-1"></a>LIMIT <span class="dv">20</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>                   gift_name percentile
+1              costume trunk       0.92
+2           finger paint set       0.92
+3                 hoverboard       0.92
+4                  jump rope       0.92
+5                  magic kit       0.92
+6           musical keyboard       0.92
+7              rocking horse       0.92
+8              talking globe       0.92
+9              toy submarine       0.92
+10             chemistry set       0.86
+11 friendship bracelet maker       0.86
+12           learning tablet       0.86
+13              magic 8 ball       0.86
+14                magic wand       0.86
+15                toy rocket       0.86
+16               bowling set       0.72
+17           building blocks       0.72
+18       crystal growing kit       0.72
+19              flying drone       0.72
+20           magic treehouse       0.72</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>0.018 sec elapsed</code></pre>
+</div>
+</div>
 </section>
 <section id="day-13" class="level1 panel-name panel">
 <h1 class="panel-name">Day 13</h1>

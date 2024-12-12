@@ -295,11 +295,45 @@ toc()
 
 # Day 11 {.panel-name}
 
+**Day 11**
+
+```{r, code=readLines("./2024/day_11/query_day11.sql")}
+#| label: code-day11
+#| eval: false
+```
+
+```{r}
+#| label: day11
+#| echo: false
+#| cache: true
+
+tic()
+print(dbGetQuery(con, statement = read_file("./2024/day_11/query_day11.sql")))
+toc()
+```
+
 :::
 
 ::: {.panel}
 
 # Day 12 {.panel-name}
+
+**Day 12**
+
+```{r, code=readLines("./2024/day_12/query_day12.sql")}
+#| label: code-day12
+#| eval: false
+```
+
+```{r}
+#| label: day12
+#| echo: false
+#| cache: true
+
+tic()
+print(dbGetQuery(con, statement = read_file("./2024/day_12/query_day12.sql")))
+toc()
+```
 
 :::
 
