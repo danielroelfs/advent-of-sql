@@ -162,8 +162,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 #panelset_001_day-10 {color: #409327 !important;}
 #panelset_001_day-11 {color: #409327 !important;}
 #panelset_001_day-12 {color: #409327 !important;}
-#panelset_001_day-13 {color: #D63131 !important;}
-#panelset_001_day-14 {color: #D63131 !important;}
+#panelset_001_day-13 {color: #409327 !important;}
+#panelset_001_day-14 {color: #409327 !important;}
 #panelset_001_day-15 {color: #D63131 !important;}
 #panelset_001_day-16 {color: #D63131 !important;}
 #panelset_001_day-17 {color: #D63131 !important;}
@@ -701,9 +701,79 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="day-13" class="level1 panel-name panel">
 <h1 class="panel-name">Day 13</h1>
+<p><strong>Day 13</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>WITH email_addresses <span class="fu">AS</span> (</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>    SELECT</span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>        name,</span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>        email,</span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>        <span class="fu">SPLIT_PART</span>(email, <span class="st">'@'</span>, <span class="dv">2</span>) AS domain_name</span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>    FROM contact_list, <span class="fu">UNNEST</span>(email_addresses) AS email</span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a>SELECT</span>
+<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a>    domain_name,</span>
+<span id="cb37-11"><a href="#cb37-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">COUNT</span>(<span class="sc">*</span>) AS n_users</span>
+<span id="cb37-12"><a href="#cb37-12" aria-hidden="true" tabindex="-1"></a>FROM</span>
+<span id="cb37-13"><a href="#cb37-13" aria-hidden="true" tabindex="-1"></a>    email_addresses</span>
+<span id="cb37-14"><a href="#cb37-14" aria-hidden="true" tabindex="-1"></a>GROUP BY</span>
+<span id="cb37-15"><a href="#cb37-15" aria-hidden="true" tabindex="-1"></a>    domain_name</span>
+<span id="cb37-16"><a href="#cb37-16" aria-hidden="true" tabindex="-1"></a>ORDER BY n_users DESC</span>
+<span id="cb37-17"><a href="#cb37-17" aria-hidden="true" tabindex="-1"></a>LIMIT <span class="dv">5</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>    domain_name n_users
+1     bells.org     155
+2 stockings.net     154
+3     gifts.biz     149
+4     bells.com     146
+5     holly.biz     145</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>0.066 sec elapsed</code></pre>
+</div>
+</div>
 </section>
 <section id="day-14" class="level1 panel-name panel">
 <h1 class="panel-name">Day 14</h1>
+<p><strong>Day 14</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>WITH receipts <span class="fu">AS</span> (</span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>    SELECT <span class="fu">JSONB_ARRAY_ELEMENTS</span>(cleaning_receipts) AS receipt</span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>    FROM santarecords</span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>),</span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a>unnested_receipt_items <span class="fu">AS</span> (</span>
+<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a>    SELECT</span>
+<span id="cb40-8"><a href="#cb40-8" aria-hidden="true" tabindex="-1"></a>        receipt <span class="ot">-&gt;&gt;</span> <span class="st">'drop_off'</span> AS drop_off_date,</span>
+<span id="cb40-9"><a href="#cb40-9" aria-hidden="true" tabindex="-1"></a>        receipt <span class="ot">-&gt;&gt;</span> <span class="st">'garment'</span> AS garment,</span>
+<span id="cb40-10"><a href="#cb40-10" aria-hidden="true" tabindex="-1"></a>        receipt <span class="ot">-&gt;&gt;</span> <span class="st">'color'</span> AS color</span>
+<span id="cb40-11"><a href="#cb40-11" aria-hidden="true" tabindex="-1"></a>    FROM receipts</span>
+<span id="cb40-12"><a href="#cb40-12" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb40-13"><a href="#cb40-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-14"><a href="#cb40-14" aria-hidden="true" tabindex="-1"></a>SELECT <span class="sc">*</span> FROM unnested_receipt_items</span>
+<span id="cb40-15"><a href="#cb40-15" aria-hidden="true" tabindex="-1"></a>WHERE</span>
+<span id="cb40-16"><a href="#cb40-16" aria-hidden="true" tabindex="-1"></a>    <span class="dv">1</span> <span class="ot">=</span> <span class="dv">1</span></span>
+<span id="cb40-17"><a href="#cb40-17" aria-hidden="true" tabindex="-1"></a>    AND garment <span class="ot">=</span> <span class="st">'suit'</span></span>
+<span id="cb40-18"><a href="#cb40-18" aria-hidden="true" tabindex="-1"></a>    AND color <span class="ot">=</span> <span class="st">'green'</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>  drop_off_date garment color
+1    2024-12-22    suit green
+2    2024-12-22    suit green
+3    2024-11-27    suit green
+4    2024-11-08    suit green
+5    2024-11-28    suit green
+6    2024-11-07    suit green
+7    2024-11-15    suit green
+8    2024-11-06    suit green</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>0.005 sec elapsed</code></pre>
+</div>
+</div>
 </section>
 <section id="day-15" class="level1 panel-name panel">
 <h1 class="panel-name">Day 15</h1>
