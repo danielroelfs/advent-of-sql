@@ -164,7 +164,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 #panelset_001_day-12 {color: #409327 !important;}
 #panelset_001_day-13 {color: #409327 !important;}
 #panelset_001_day-14 {color: #409327 !important;}
-#panelset_001_day-15 {color: #D63131 !important;}
+#panelset_001_day-15 {color: #409327 !important;}
 #panelset_001_day-16 {color: #D63131 !important;}
 #panelset_001_day-17 {color: #D63131 !important;}
 #panelset_001_day-18 {color: #D63131 !important;}
@@ -777,6 +777,29 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="day-15" class="level1 panel-name panel">
 <h1 class="panel-name">Day 15</h1>
+<p><strong>Day 15</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>WITH last_location <span class="fu">AS</span> (</span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>    SELECT coordinate</span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>    FROM sleigh_locations</span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>    WHERE <span class="at">timestamp =</span> (</span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>        SELECT <span class="fu">MAX</span>(sl.timestamp) FROM sleigh_locations AS sl</span>
+<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb43-8"><a href="#cb43-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-9"><a href="#cb43-9" aria-hidden="true" tabindex="-1"></a>SELECT areas.place_name</span>
+<span id="cb43-10"><a href="#cb43-10" aria-hidden="true" tabindex="-1"></a>FROM areas, last_location AS ll</span>
+<span id="cb43-11"><a href="#cb43-11" aria-hidden="true" tabindex="-1"></a>WHERE <span class="fu">ST_INTERSECTS</span>(areas.polygon, ll.coordinate);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>  place_name
+1     Moscow</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>0.241 sec elapsed</code></pre>
+</div>
+</div>
 </section>
 <section id="day-16" class="level1 panel-name panel">
 <h1 class="panel-name">Day 16</h1>
