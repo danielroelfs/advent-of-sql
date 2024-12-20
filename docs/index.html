@@ -166,9 +166,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 #panelset_001_day-14 {color: #409327 !important;}
 #panelset_001_day-15 {color: #409327 !important;}
 #panelset_001_day-16 {color: #409327 !important;}
+#panelset_001_day-19 {color: #409327 !important;}
 #panelset_001_day-17 {color: #D63131 !important;}
 #panelset_001_day-18 {color: #D63131 !important;}
-#panelset_001_day-19 {color: #D63131 !important;}
 #panelset_001_day-20 {color: #D63131 !important;}
 #panelset_001_day-21 {color: #D63131 !important;}
 #panelset_001_day-22 {color: #D63131 !important;}
@@ -843,6 +843,44 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="day-19" class="level1 panel-name panel">
 <h1 class="panel-name">Day 19</h1>
+<p><strong>Day 19</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>WITH avg_last_score <span class="fu">AS</span> (</span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>    SELECT</span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>        <span class="fu">AVG</span>(</span>
+<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a>            year_end_performance_scores[</span>
+<span id="cb49-5"><a href="#cb49-5" aria-hidden="true" tabindex="-1"></a>                <span class="fu">ARRAY_UPPER</span>(year_end_performance_scores, <span class="dv">1</span>)</span>
+<span id="cb49-6"><a href="#cb49-6" aria-hidden="true" tabindex="-1"></a>            ]</span>
+<span id="cb49-7"><a href="#cb49-7" aria-hidden="true" tabindex="-1"></a>        ) AS avg_score</span>
+<span id="cb49-8"><a href="#cb49-8" aria-hidden="true" tabindex="-1"></a>    FROM employees</span>
+<span id="cb49-9"><a href="#cb49-9" aria-hidden="true" tabindex="-1"></a>),</span>
+<span id="cb49-10"><a href="#cb49-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-11"><a href="#cb49-11" aria-hidden="true" tabindex="-1"></a>salaries_w_bonus <span class="fu">AS</span> (</span>
+<span id="cb49-12"><a href="#cb49-12" aria-hidden="true" tabindex="-1"></a>    SELECT</span>
+<span id="cb49-13"><a href="#cb49-13" aria-hidden="true" tabindex="-1"></a>        CASE</span>
+<span id="cb49-14"><a href="#cb49-14" aria-hidden="true" tabindex="-1"></a>            WHEN</span>
+<span id="cb49-15"><a href="#cb49-15" aria-hidden="true" tabindex="-1"></a>                em.year_end_performance_scores[</span>
+<span id="cb49-16"><a href="#cb49-16" aria-hidden="true" tabindex="-1"></a>                    <span class="fu">ARRAY_UPPER</span>(em.year_end_performance_scores, <span class="dv">1</span>)</span>
+<span id="cb49-17"><a href="#cb49-17" aria-hidden="true" tabindex="-1"></a>                ]</span>
+<span id="cb49-18"><a href="#cb49-18" aria-hidden="true" tabindex="-1"></a>                <span class="sc">&gt;</span> (SELECT als.avg_score FROM avg_last_score AS als)</span>
+<span id="cb49-19"><a href="#cb49-19" aria-hidden="true" tabindex="-1"></a>                THEN em.salary <span class="sc">*</span> <span class="fl">1.15</span></span>
+<span id="cb49-20"><a href="#cb49-20" aria-hidden="true" tabindex="-1"></a>            ELSE em.salary</span>
+<span id="cb49-21"><a href="#cb49-21" aria-hidden="true" tabindex="-1"></a>        END AS salary_w_bonus</span>
+<span id="cb49-22"><a href="#cb49-22" aria-hidden="true" tabindex="-1"></a>    FROM employees AS em</span>
+<span id="cb49-23"><a href="#cb49-23" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb49-24"><a href="#cb49-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-25"><a href="#cb49-25" aria-hidden="true" tabindex="-1"></a>SELECT <span class="fu">ROUND</span>(<span class="fu">SUM</span>(salary_w_bonus), <span class="dv">2</span>) AS total_salary_paid</span>
+<span id="cb49-26"><a href="#cb49-26" aria-hidden="true" tabindex="-1"></a>FROM salaries_w_bonus;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>  total_salary_paid
+1        5491552488</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>0.056 sec elapsed</code></pre>
+</div>
+</div>
 </section>
 <section id="day-20" class="level1 panel-name panel">
 <h1 class="panel-name">Day 20</h1>

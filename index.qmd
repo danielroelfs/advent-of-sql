@@ -445,6 +445,23 @@ toc()
 
 # Day 19 {.panel-name}
 
+**Day 19**
+
+```{r, code=readLines("./2024/day_19/query_day19.sql")}
+#| label: code-day19
+#| eval: false
+```
+
+```{r}
+#| label: day19
+#| echo: false
+#| cache: true
+
+tic()
+print(dbGetQuery(con, statement = read_file("./2024/day_19/query_day19.sql")))
+toc()
+```
+
 :::
 
 ::: {.panel}
