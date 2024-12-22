@@ -169,9 +169,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 #panelset_001_day-19 {color: #409327 !important;}
 #panelset_001_day-20 {color: #409327 !important;}
 #panelset_001_day-21 {color: #409327 !important;}
+#panelset_001_day-22 {color: #409327 !important;}
 #panelset_001_day-17 {color: #D63131 !important;}
 #panelset_001_day-18 {color: #D63131 !important;}
-#panelset_001_day-22 {color: #D63131 !important;}
 #panelset_001_day-23 {color: #D63131 !important;}
 #panelset_001_day-24 {color: #D63131 !important;}
 #panelset_001_day-25 {color: #D63131 !important;}</style>
@@ -964,6 +964,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="day-22" class="level1 panel-name panel">
 <h1 class="panel-name">Day 22</h1>
+<p><strong>Day 22</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>SELECT <span class="fu">COUNT</span>(elf_name) AS numofelveswithsql</span>
+<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a>FROM elves</span>
+<span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a>WHERE <span class="st">'SQL'</span> <span class="ot">=</span> <span class="fu">ANY</span>(<span class="fu">STRING_TO_ARRAY</span>(skills, <span class="st">','</span>));</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>  numofelveswithsql
+1              2488</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>0.054 sec elapsed</code></pre>
+</div>
+</div>
 </section>
 <section id="day-23" class="level1 panel-name panel">
 <h1 class="panel-name">Day 23</h1>
