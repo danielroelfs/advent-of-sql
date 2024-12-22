@@ -168,9 +168,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 #panelset_001_day-16 {color: #409327 !important;}
 #panelset_001_day-19 {color: #409327 !important;}
 #panelset_001_day-20 {color: #409327 !important;}
+#panelset_001_day-21 {color: #409327 !important;}
 #panelset_001_day-17 {color: #D63131 !important;}
 #panelset_001_day-18 {color: #D63131 !important;}
-#panelset_001_day-21 {color: #D63131 !important;}
 #panelset_001_day-22 {color: #D63131 !important;}
 #panelset_001_day-23 {color: #D63131 !important;}
 #panelset_001_day-24 {color: #D63131 !important;}
@@ -925,6 +925,42 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="day-21" class="level1 panel-name panel">
 <h1 class="panel-name">Day 21</h1>
+<p><strong>Day 21</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>WITH total_sales <span class="fu">AS</span> (</span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>    SELECT</span>
+<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a>        <span class="fu">DATE_PART</span>(<span class="st">'YEAR'</span>, sale_date) AS sale_year,</span>
+<span id="cb55-4"><a href="#cb55-4" aria-hidden="true" tabindex="-1"></a>        <span class="fu">DATE_PART</span>(<span class="st">'QUARTER'</span>, sale_date) AS sale_quarter,</span>
+<span id="cb55-5"><a href="#cb55-5" aria-hidden="true" tabindex="-1"></a>        <span class="fu">SUM</span>(amount) AS sale_amount</span>
+<span id="cb55-6"><a href="#cb55-6" aria-hidden="true" tabindex="-1"></a>    FROM sales</span>
+<span id="cb55-7"><a href="#cb55-7" aria-hidden="true" tabindex="-1"></a>    GROUP BY sale_year, sale_quarter</span>
+<span id="cb55-8"><a href="#cb55-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb55-9"><a href="#cb55-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-10"><a href="#cb55-10" aria-hidden="true" tabindex="-1"></a>SELECT</span>
+<span id="cb55-11"><a href="#cb55-11" aria-hidden="true" tabindex="-1"></a>    sale_year,</span>
+<span id="cb55-12"><a href="#cb55-12" aria-hidden="true" tabindex="-1"></a>    sale_quarter,</span>
+<span id="cb55-13"><a href="#cb55-13" aria-hidden="true" tabindex="-1"></a>    sale_amount,</span>
+<span id="cb55-14"><a href="#cb55-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ROUND</span>(</span>
+<span id="cb55-15"><a href="#cb55-15" aria-hidden="true" tabindex="-1"></a>        sale_amount</span>
+<span id="cb55-16"><a href="#cb55-16" aria-hidden="true" tabindex="-1"></a>        <span class="sc">/</span> <span class="fu">LAG</span>(sale_amount) <span class="fu">OVER</span> (ORDER BY sale_year, sale_quarter), <span class="dv">2</span></span>
+<span id="cb55-17"><a href="#cb55-17" aria-hidden="true" tabindex="-1"></a>    ) AS growth_rate</span>
+<span id="cb55-18"><a href="#cb55-18" aria-hidden="true" tabindex="-1"></a>FROM total_sales</span>
+<span id="cb55-19"><a href="#cb55-19" aria-hidden="true" tabindex="-1"></a>ORDER BY growth_rate DESC NULLS LAST</span>
+<span id="cb55-20"><a href="#cb55-20" aria-hidden="true" tabindex="-1"></a>LIMIT <span class="dv">5</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>  sale_year sale_quarter sale_amount growth_rate
+1      1997            4      481323        1.40
+2      2022            3      460742        1.21
+3      2007            2      488715        1.18
+4      2000            2      520574        1.18
+5      2004            2      501878        1.17</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>0.067 sec elapsed</code></pre>
+</div>
+</div>
 </section>
 <section id="day-22" class="level1 panel-name panel">
 <h1 class="panel-name">Day 22</h1>
