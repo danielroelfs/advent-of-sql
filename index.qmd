@@ -25,7 +25,7 @@ challenge_done <- fs::dir_ls("./2024/", recurse = TRUE) |>
   str_extract("(?<=query_day)(.*)(?=.sql)") |>
   as.numeric()
 
-not_done <- setdiff(seq(25), challenge_done)
+not_done <- setdiff(seq(24), challenge_done)
 
 htmltools::tags$style(
   str_c(collapse = "\n",
@@ -567,12 +567,5 @@ toc()
 
 :::
 
-::: {.panel}
-
-# 🎄 {.panel-name}
-
-No challenge today, merry Christmas 🌾
-
-:::
-
 ::::
+
