@@ -433,11 +433,15 @@ toc()
 
 # Day 17 {.panel-name}
 
+Timezones are hard enough, let alone to do them in SQL 😅
+
 :::
 
 ::: {.panel}
 
 # Day 18 {.panel-name}
+
+Couldn't figure this one out 😕 It asks for a recursive CTE as we used before in Day 8, but this one had a trick to I can't seem to get
 
 :::
 
@@ -537,6 +541,24 @@ toc()
 
 # Day 23 {.panel-name}
 
+
+**Day 22**
+
+```{r, code=readLines("./2024/day_23/query_day23.sql")}
+#| label: code-day23
+#| eval: false
+```
+
+```{r}
+#| label: day23
+#| echo: false
+#| cache: true
+
+tic()
+print(dbGetQuery(con, statement = read_file("./2024/day_23/query_day23.sql")))
+toc()
+```
+
 :::
 
 ::: {.panel}
@@ -547,7 +569,9 @@ toc()
 
 ::: {.panel}
 
-# Day 25 {.panel-name}
+# 🎄 {.panel-name}
+
+No challenge today, merry Christmas 🌾
 
 :::
 

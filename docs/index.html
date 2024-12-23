@@ -170,9 +170,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 #panelset_001_day-20 {color: #409327 !important;}
 #panelset_001_day-21 {color: #409327 !important;}
 #panelset_001_day-22 {color: #409327 !important;}
+#panelset_001_day-23 {color: #409327 !important;}
 #panelset_001_day-17 {color: #D63131 !important;}
 #panelset_001_day-18 {color: #D63131 !important;}
-#panelset_001_day-23 {color: #D63131 !important;}
 #panelset_001_day-24 {color: #D63131 !important;}
 #panelset_001_day-25 {color: #D63131 !important;}</style>
 </div>
@@ -837,9 +837,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="day-17" class="level1 panel-name panel">
 <h1 class="panel-name">Day 17</h1>
+<p>Timezones are hard enough, let alone to do them in SQL 😅</p>
 </section>
 <section id="day-18" class="level1 panel-name panel">
 <h1 class="panel-name">Day 18</h1>
+<p>Couldn’t figure this one out 😕 It asks for a recursive CTE as we used before in Day 8, but this one had a trick to I can’t seem to get</p>
 </section>
 <section id="day-19" class="level1 panel-name panel">
 <h1 class="panel-name">Day 19</h1>
@@ -982,12 +984,52 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="day-23" class="level1 panel-name panel">
 <h1 class="panel-name">Day 23</h1>
+<p><strong>Day 22</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a>WITH lag_values <span class="fu">AS</span> (</span>
+<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a>    SELECT</span>
+<span id="cb61-3"><a href="#cb61-3" aria-hidden="true" tabindex="-1"></a>        <span class="fu">LAG</span>(id, <span class="dv">1</span>) <span class="fu">OVER</span> (ORDER BY id) <span class="sc">+</span> <span class="dv">1</span> AS gap_start,</span>
+<span id="cb61-4"><a href="#cb61-4" aria-hidden="true" tabindex="-1"></a>        id <span class="sc">-</span> <span class="dv">1</span> AS gap_end,</span>
+<span id="cb61-5"><a href="#cb61-5" aria-hidden="true" tabindex="-1"></a>        id <span class="sc">-</span> <span class="fu">LAG</span>(id, <span class="dv">1</span>) <span class="fu">OVER</span> (ORDER BY id) AS gap</span>
+<span id="cb61-6"><a href="#cb61-6" aria-hidden="true" tabindex="-1"></a>    FROM sequence_table</span>
+<span id="cb61-7"><a href="#cb61-7" aria-hidden="true" tabindex="-1"></a>),</span>
+<span id="cb61-8"><a href="#cb61-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb61-9"><a href="#cb61-9" aria-hidden="true" tabindex="-1"></a>long_gaps <span class="fu">AS</span> (</span>
+<span id="cb61-10"><a href="#cb61-10" aria-hidden="true" tabindex="-1"></a>    SELECT</span>
+<span id="cb61-11"><a href="#cb61-11" aria-hidden="true" tabindex="-1"></a>        gap_start,</span>
+<span id="cb61-12"><a href="#cb61-12" aria-hidden="true" tabindex="-1"></a>        gap_end,</span>
+<span id="cb61-13"><a href="#cb61-13" aria-hidden="true" tabindex="-1"></a>        <span class="fu">GENERATE_SERIES</span>(gap_start, gap_end) AS gap_numbers</span>
+<span id="cb61-14"><a href="#cb61-14" aria-hidden="true" tabindex="-1"></a>    FROM lag_values</span>
+<span id="cb61-15"><a href="#cb61-15" aria-hidden="true" tabindex="-1"></a>    WHERE gap <span class="sc">&gt;</span> <span class="dv">1</span></span>
+<span id="cb61-16"><a href="#cb61-16" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb61-17"><a href="#cb61-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb61-18"><a href="#cb61-18" aria-hidden="true" tabindex="-1"></a>SELECT</span>
+<span id="cb61-19"><a href="#cb61-19" aria-hidden="true" tabindex="-1"></a>    gap_start,</span>
+<span id="cb61-20"><a href="#cb61-20" aria-hidden="true" tabindex="-1"></a>    gap_end,</span>
+<span id="cb61-21"><a href="#cb61-21" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ARRAY_AGG</span>(gap_numbers ORDER BY gap_start) AS missing_numbers</span>
+<span id="cb61-22"><a href="#cb61-22" aria-hidden="true" tabindex="-1"></a>FROM long_gaps</span>
+<span id="cb61-23"><a href="#cb61-23" aria-hidden="true" tabindex="-1"></a>GROUP BY gap_start, gap_end;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>  gap_start gap_end            missing_numbers
+1       997    1001    {997,998,999,1000,1001}
+2      3761    3765 {3761,3762,3763,3764,3765}
+3      6525    6527           {6525,6526,6527}
+4      6529    6529                     {6529}
+5      9289    9292      {9289,9290,9291,9292}</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>0.037 sec elapsed</code></pre>
+</div>
+</div>
 </section>
 <section id="day-24" class="level1 panel-name panel">
 <h1 class="panel-name">Day 24</h1>
 </section>
-<section id="day-25" class="level1 panel-name panel">
-<h1 class="panel-name">Day 25</h1>
+<section id="section" class="level1 panel-name panel">
+<h1 class="panel-name">🎄</h1>
+<p>No challenge today, merry Christmas 🌾</p>
 </section>
 </div>
 
