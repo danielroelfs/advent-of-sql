@@ -171,9 +171,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 #panelset_001_day-21 {color: #409327 !important;}
 #panelset_001_day-22 {color: #409327 !important;}
 #panelset_001_day-23 {color: #409327 !important;}
+#panelset_001_day-24 {color: #409327 !important;}
 #panelset_001_day-17 {color: #D63131 !important;}
-#panelset_001_day-18 {color: #D63131 !important;}
-#panelset_001_day-24 {color: #D63131 !important;}</style>
+#panelset_001_day-18 {color: #D63131 !important;}</style>
 </div>
 </div>
 <div class="panelset">
@@ -983,7 +983,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="day-23" class="level1 panel-name panel">
 <h1 class="panel-name">Day 23</h1>
-<p><strong>Day 22</strong></p>
+<p><strong>Day 23</strong></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a>WITH lag_values <span class="fu">AS</span> (</span>
 <span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a>    SELECT</span>
@@ -1025,6 +1025,38 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="day-24" class="level1 panel-name panel">
 <h1 class="panel-name">Day 24</h1>
+<p><strong>Day 24</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a>SELECT</span>
+<span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a>    songs.song_title,</span>
+<span id="cb64-3"><a href="#cb64-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">COUNT</span>(songs.song_title) AS total_plays,</span>
+<span id="cb64-4"><a href="#cb64-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">SUM</span>(</span>
+<span id="cb64-5"><a href="#cb64-5" aria-hidden="true" tabindex="-1"></a>        CASE WHEN up.duration <span class="sc">&lt;</span> songs.song_duration THEN <span class="dv">1</span> ELSE <span class="dv">0</span> END</span>
+<span id="cb64-6"><a href="#cb64-6" aria-hidden="true" tabindex="-1"></a>    ) AS skipped</span>
+<span id="cb64-7"><a href="#cb64-7" aria-hidden="true" tabindex="-1"></a>FROM songs</span>
+<span id="cb64-8"><a href="#cb64-8" aria-hidden="true" tabindex="-1"></a>INNER JOIN user_plays AS up ON songs.song_id <span class="ot">=</span> up.song_id</span>
+<span id="cb64-9"><a href="#cb64-9" aria-hidden="true" tabindex="-1"></a>GROUP BY songs.song_title</span>
+<span id="cb64-10"><a href="#cb64-10" aria-hidden="true" tabindex="-1"></a>ORDER BY total_plays DESC, skipped ASC</span>
+<span id="cb64-11"><a href="#cb64-11" aria-hidden="true" tabindex="-1"></a>LIMIT <span class="dv">10</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>                               song_title total_plays skipped
+1         All I Want For Christmas Is You         562     412
+2                          The First Noel         541     416
+3                            Jingle Bells         524     399
+4                          Deck the Halls         521     395
+5                            Silent Night         513     389
+6                       Winter Wonderland         511     386
+7                            Silver Bells         508     386
+8  Let It Snow! Let It Snow! Let It Snow!         506     381
+9                         White Christmas         504     382
+10                         Last Christmas         503     385</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>0.065 sec elapsed</code></pre>
+</div>
+</div>
 </section>
 </div>
 
