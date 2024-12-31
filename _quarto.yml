@@ -10,7 +10,7 @@ website:
   navbar:
     pinned: true
     left:
-      - index.qmd
+      - 2024.qmd
       - about.qmd
 
 format:

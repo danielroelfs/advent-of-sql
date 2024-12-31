@@ -1,3 +1,7 @@
 ---
 title: "About"
 ---
+
+Every year many coders flock to the [Advent of Code](http://adventofcode.com) challenges where [Eric Wastl](https://was.tl) and his team set up a set of increasingly complicated challenges as an Advent calendar. These challenges are a very nice opportunity to learn new techniques and challenge your skills. 
+
+These challenges are often not nicely suited for SQL (unless you _really_ want a tough challenge) so to allow people wanting to participate in a similar challenge as the [Advent of Code](http://adventofcode.com) could participate, for the first time in 2024, in the [Advent of SQL](https://adventofsql.com) challenges. [Advent of SQL](https://adventofsql.com) was created by [Dan Kent](https://adventofsql.com/news/2024-big-review). Read his review from the first iteration [here](https://adventofsql.com/news/2024-big-review).
