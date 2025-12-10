@@ -1,0 +1,164 @@
+---
+title: "2025"
+execute:
+  message: false
+  warning: false
+---
+
+```{r}
+#| label: setup
+#| include: false
+
+library(tidyverse)
+library(DBI)
+library(tictoc)
+
+xaringanExtra::use_panelset()
+```
+
+```{r}
+#| label: index-table
+#| echo: false
+
+challenge_done <- fs::dir_ls("./2025/", recurse = TRUE) |>
+  str_subset("query") |>
+  str_extract("(?<=query_day)(.*)(?=.sql)") |>
+  as.numeric()
+
+not_done <- setdiff(seq(24), challenge_done)
+
+htmltools::tags$style(
+  str_c(collapse = "\n",
+    c(
+      glue::glue(
+        "#panelset_001_day-[challenge_done] {color: #409327 !important;}",
+        .open = "[", .close = "]"
+      ),
+      glue::glue(
+        "#panelset_001_day-[not_done] {color: #D63131 !important;}",
+        .open = "[", .close = "]"
+      )
+    )
+  )
+)
+```
+
+```{r}
+#| label: connect-db
+#| echo: false
+
+dotenv::load_dot_env()
+
+con <- DBI::dbConnect(RPostgres::Postgres(),
+    user=Sys.getenv("DBUSER"),
+    password=Sys.getenv("DBPASS"),
+    host=Sys.getenv("DBHOST"),
+    port=as.integer(Sys.getenv("DBPORT")),
+    dbname=Sys.getenv("DBNAME"),
+)
+
+knitr::opts_chunk$set(connection = "con")
+```
+
+:::: {.panelset}
+
+::: {.panel}
+
+# Day 10 {.panel-name}
+
+**Day 10**
+
+:::
+
+::: {.panel}
+
+# Day 11 {.panel-name}
+
+:::
+
+::: {.panel}
+
+# Day 12 {.panel-name}
+
+:::
+
+::: {.panel}
+
+# Day 13 {.panel-name}
+
+:::
+
+::: {.panel}
+
+# Day 14 {.panel-name}
+
+:::
+
+::: {.panel}
+
+# Day 15 {.panel-name}
+
+:::
+
+::: {.panel}
+
+# Day 16 {.panel-name}
+
+:::
+
+::: {.panel}
+
+# Day 17 {.panel-name}
+
+:::
+
+::: {.panel}
+
+# Day 18 {.panel-name}
+
+:::
+
+::: {.panel}
+
+# Day 19 {.panel-name}
+
+:::
+
+::: {.panel}
+
+# Day 20 {.panel-name}
+
+:::
+
+::: {.panel}
+
+# Day 21 {.panel-name}
+
+:::
+
+::: {.panel}
+
+# Day 22 {.panel-name}
+
+:::
+
+::: {.panel}
+
+# Day 23 {.panel-name}
+
+:::
+
+::: {.panel}
+
+# Day 24 {.panel-name}
+
+:::
+
+::: {.panel}
+
+# Day 25 {.panel-name}
+
+:::
+
+::::
+

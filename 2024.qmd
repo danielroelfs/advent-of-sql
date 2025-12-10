@@ -47,11 +47,13 @@ htmltools::tags$style(
 #| label: connect-db
 #| echo: false
 
+dotenv::load_dot_env()
+
 con <- DBI::dbConnect(RPostgres::Postgres(),
-    host=Sys.getenv("DBHOST"),
-    port=Sys.getenv("DBPORT"),
     user=Sys.getenv("DBUSER"),
     password=Sys.getenv("DBPASS"),
+    host=Sys.getenv("DBHOST"),
+    port=as.integer(Sys.getenv("DBPORT")),
     dbname=Sys.getenv("DBNAME"),
 )
 

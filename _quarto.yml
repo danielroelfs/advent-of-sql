@@ -11,7 +11,10 @@ website:
     pinned: true
     left:
       - 2024.qmd
+      - 2025.qmd
       - about.qmd
+
+highlight-style: a11y-dark
 
 format:
   html:
@@ -19,7 +22,7 @@ format:
     grid:
       body-width: 500px
     theme:
+      - none
       - sass/main.scss
-    highlight-style: gruvbox
     number-sections: false
     toc: false

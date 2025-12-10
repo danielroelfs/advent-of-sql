@@ -1,25 +1,20 @@
 /*-- scss:defaults --*/
 
+@import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap'); // Source Code Pro
+
 // Custom settings
-$main-font: "source-sans-pro", sans-serif !default;
+$main-font: "Source Code Pro", Monaco, Courier, monospace !default;
 $main-font-size: 22px;
 $main-font-portables: 17px;
-$main-font-color: #1f1f1f;
-$header-font: "source-sans-pro", sans-serif !default;
-$header-weight: 700; // 711 if Cooper Hewitt
-$code-font: "Source Code", monospace;
+$main-font-color: #efefef;
+$header-font: "Source Code Pro", Monaco, Courier, monospace !default;
+$header-weight: 700;
+$code-font: "Source Code Pro", monospace;
 $primary-accent: #e67467;
 $section-label-color: #e67467;
-$page-background: #eeedef;
-$white: #eeedef;
-$dark-accent1: #292b56;
-$dark-accent2: #1d4947;
-$dark-accent3: #8a382d;
-$light-accent1: #8ee7fc;
-$light-accent2: #ff8274;
-$light-accent3: #f2c674;
-$light-accent4: #cff4cc;
-$link-color: rgb(92, 163, 214);
+$page-background: #1f1f1f;
+$white: #1f1f1f;
+$link-color: lighten($primary-accent, 5%);
 $dark-grey: #384044;
 
 // Bootstrap options
