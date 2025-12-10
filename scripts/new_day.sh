@@ -10,7 +10,6 @@ year=`date +"%Y"`
 
 mkdir ./${year}/day_${day}
 touch ./${year}/day_${day}/input_day${day}.sql
-touch ./${year}/day_${day}/test_input_day${day}.sql
 touch ./${year}/day_${day}/query_day${day}.sql
 
 echo """# Advent of SQL - Day ${1}

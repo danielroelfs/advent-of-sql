@@ -50,8 +50,6 @@ htmltools::tags$style(
 dotenv::load_dot_env()
 
 con <- DBI::dbConnect(RPostgres::Postgres(),
-    user=Sys.getenv("DBUSER"),
-    password=Sys.getenv("DBPASS"),
     host=Sys.getenv("DBHOST"),
     port=as.integer(Sys.getenv("DBPORT")),
     dbname=Sys.getenv("DBNAME"),
@@ -67,6 +65,21 @@ knitr::opts_chunk$set(connection = "con")
 # Day 10 {.panel-name}
 
 **Day 10**
+
+```{r, code=readLines("./2025/day_10/query_day10.sql")}
+#| label: code-day10
+#| eval: false
+```
+
+```{r}
+#| label: day10
+#| echo: false
+#| cache: true
+
+tic()
+print(dbGetQuery(con, statement = read_file("./2025/day_10/query_day10.sql")))
+toc()
+```
 
 :::
 
