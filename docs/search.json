@@ -11,7 +11,7 @@
     "href": "about.html",
     "title": "About",
     "section": "",
-    "text": "Every year many coders flock to the Advent of Code challenges where Eric Wastl and his team set up a set of increasingly complicated challenges as an Advent calendar. These challenges are a very nice opportunity to learn new techniques and challenge your skills.\nThese challenges are often not nicely suited for SQL (unless you really want a tough challenge) so to allow people wanting to participate in a similar challenge as the Advent of Code could participate, for the first time in 2024, in the Advent of SQL challenges. Advent of SQL was created by Dan Kent. Read his review from the first iteration here."
+    "text": "Every year many coders flock to the Advent of Code challenges where Eric Wastl and his team set up a set of increasingly complicated challenges as an Advent calendar. These challenges are a very nice opportunity to learn new techniques and challenge your skills.\nThese challenges are often not nicely suited for SQL (unless you really want a tough challenge) so to allow people wanting to participate in a similar challenge as the Advent of Code could participate, for the first time in 2024, in the Advent of SQL challenges. Advent of SQL was initially created by Dan Kent. Read his review from the first iteration here. But due to the heavy workload associated with running a project like this he handed over the project to Aaron Francis, creator of the Database School databaseschool.com which now also hosts the project (link)."
   },
   {
     "objectID": "index.html",
