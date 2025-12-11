@@ -160,6 +160,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <div class="cell-output-display">
 <style>#panelset_001_day-10 {color: #409327 !important;}
+#panelset_001_day-11 {color: #409327 !important;}
 #panelset_001_day-1 {color: #D63131 !important;}
 #panelset_001_day-2 {color: #D63131 !important;}
 #panelset_001_day-3 {color: #D63131 !important;}
@@ -169,7 +170,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 #panelset_001_day-7 {color: #D63131 !important;}
 #panelset_001_day-8 {color: #D63131 !important;}
 #panelset_001_day-9 {color: #D63131 !important;}
-#panelset_001_day-11 {color: #D63131 !important;}
 #panelset_001_day-12 {color: #D63131 !important;}
 #panelset_001_day-13 {color: #D63131 !important;}
 #panelset_001_day-14 {color: #D63131 !important;}
@@ -229,6 +229,33 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="day-11" class="level1 panel-name panel">
 <h1 class="panel-name">Day 11</h1>
+<p><strong>Day 11</strong></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>SELECT</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    cat.official_category,</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">SUM</span>(inv.quantity) AS total_usable_snowballs</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>FROM snowball_categories AS cat</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>LEFT JOIN snowball_inventory AS inv</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    ON</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>        cat.official_category <span class="ot">=</span> inv.category_name</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>        AND inv.quantity <span class="sc">&gt;=</span> <span class="dv">0</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>GROUP BY cat.official_category</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>ORDER BY total_usable_snowballs ASC;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>          official_category total_usable_snowballs
+1      arctic blast premium                  19335
+2  everfrost training round                  39612
+3 polar precision microball                 117912
+4       glacier sphere (xl)                 275503
+5       north ridge compact                 991208
+6       frost-flight deluxe                1586029</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>0.133 sec elapsed</code></pre>
+</div>
+</div>
 </section>
 <section id="day-12" class="level1 panel-name panel">
 <h1 class="panel-name">Day 12</h1>

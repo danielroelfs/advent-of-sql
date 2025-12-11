@@ -14,4 +14,4 @@ touch ./${year}/day_${day}/query_day${day}.sql
 
 echo """# Advent of SQL - Day ${1}
 
-[link to the challenge](https://adventofsql.com/challenges/${1})""" > ./${year}/day_${day}/README.md
+[link to the challenge](https://databaseschool.com/series/advent-of-sql/)""" > ./${year}/day_${day}/README.md
