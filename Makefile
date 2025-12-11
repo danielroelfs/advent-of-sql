@@ -1,7 +1,5 @@
 default: render
 
-date := `date '+%Y%m%d-%H%M'`
-
 test:
 	quarto --version
 
@@ -17,3 +15,6 @@ fix:
 
 lint:
 	sqlfluff lint .
+
+connect:
+	psql -d advent_of_sql -a
