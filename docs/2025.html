@@ -161,6 +161,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell-output-display">
 <style>#panelset_001_day-10 {color: #409327 !important;}
 #panelset_001_day-11 {color: #409327 !important;}
+#panelset_001_day-12 {color: #409327 !important;}
 #panelset_001_day-1 {color: #D63131 !important;}
 #panelset_001_day-2 {color: #D63131 !important;}
 #panelset_001_day-3 {color: #D63131 !important;}
@@ -170,7 +171,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 #panelset_001_day-7 {color: #D63131 !important;}
 #panelset_001_day-8 {color: #D63131 !important;}
 #panelset_001_day-9 {color: #D63131 !important;}
-#panelset_001_day-12 {color: #D63131 !important;}
 #panelset_001_day-13 {color: #D63131 !important;}
 #panelset_001_day-14 {color: #D63131 !important;}
 #panelset_001_day-15 {color: #D63131 !important;}
@@ -223,7 +223,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 20                  headphones 13006</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>0.107 sec elapsed</code></pre>
+<pre><code>0.157 sec elapsed</code></pre>
 </div>
 </div>
 </section>
@@ -253,12 +253,55 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 6       frost-flight deluxe                1586029</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>0.133 sec elapsed</code></pre>
+<pre><code>0.097 sec elapsed</code></pre>
 </div>
 </div>
 </section>
 <section id="day-12" class="level1 panel-name panel">
 <h1 class="panel-name">Day 12</h1>
+<p><strong>Day 12</strong></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>UPDATE hotline_messages</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>SET status <span class="ot">=</span> <span class="st">'approved'</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>WHERE</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="dv">1</span> <span class="ot">=</span> <span class="dv">1</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    AND <span class="fu">LOWER</span>(transcript) LIKE <span class="st">'%sorry%'</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    AND status IS <span class="cn">NULL</span>;</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>DELETE FROM hotline_messages</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>WHERE</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    <span class="dv">1</span> <span class="ot">=</span> <span class="dv">1</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>    AND tag <span class="fu">IN</span> (</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>        <span class="st">'penguin prank'</span>,</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>        <span class="st">'time-loop advisory'</span>,</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>        <span class="st">'possible dragon'</span>,</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>        <span class="st">'nonsense alert'</span></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>    OR <span class="fu">LOWER</span>(caller_name) <span class="ot">=</span> <span class="st">'test caller'</span>;</span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>SELECT</span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>    <span class="fu">COALESCE</span>(status, <span class="st">'needs review'</span>) AS imputed_status,</span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>    <span class="fu">COUNT</span>(<span class="sc">*</span>) AS n_messages</span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>FROM hotline_messages</span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>GROUP BY imputed_status;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>UPDATE successfully executed. 68 rows were affected.
+
+
+
+DELETE successfully executed. 89 rows were affected.
+
+  imputed_status n_messages
+1   needs review        501
+2       approved        477</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>0.014 sec elapsed</code></pre>
+</div>
+</div>
 </section>
 <section id="day-13" class="level1 panel-name panel">
 <h1 class="panel-name">Day 13</h1>
