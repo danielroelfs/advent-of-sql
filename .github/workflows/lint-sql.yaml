@@ -1,0 +1,21 @@
+name: Lint SQL queries
+
+on:
+  push:
+
+jobs:
+  lint-queries:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🛎 Check out repo
+        uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Lint SQL files
+        run: sqlfluff lint .
