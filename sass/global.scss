@@ -93,13 +93,18 @@ nav.navbar {
 ul.navbar-nav {
   text-transform: lowercase;
   li.nav-item:hover {
-    background-color: rgba($primary-accent, 0.5);
+    background-color: rgba($primary-accent, 0.67);
     transition: background 0.5s;
   }
 }
 
 .navbar-title {
   padding-left: 5px;
+}
+
+.navbar-toggler-icon {
+  //background-color: darken($main-font-color, 33%);
+  background-color: rgba($primary-accent, 0.67);
 }
 
 pre {
