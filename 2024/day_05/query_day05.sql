@@ -4,7 +4,7 @@ WITH previous AS (
         toys_produced,
         LAG(toys_produced, 1, NULL)
             OVER (ORDER BY production_date)
-        AS previous_day_production
+            AS previous_day_production
     FROM toy_production
 )
 
