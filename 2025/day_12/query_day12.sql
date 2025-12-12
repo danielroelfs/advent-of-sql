@@ -5,7 +5,6 @@ WHERE
     AND LOWER(transcript) LIKE '%sorry%'
     AND status IS NULL;
 
-
 DELETE FROM hotline_messages
 WHERE
     1 = 1
