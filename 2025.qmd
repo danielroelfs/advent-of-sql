@@ -139,7 +139,7 @@ queries <- str_split_fixed(entire_query, ";", n_queries)
 tic()
 for (i in seq_along(queries)) {
   if (i == n_queries) {
-    print(str_glue("\n"))
+    print(str_glue("\n\n"))
     print(dbGetQuery(con, statement = queries[i]))
   } else {
     command_run <- str_to_upper(word(queries[i], 1))
