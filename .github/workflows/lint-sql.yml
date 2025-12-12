@@ -21,4 +21,6 @@ jobs:
           uv pip install -r requirements.txt
 
       - name: Lint SQL files
-        run: sqlfluff lint .
+        run: |
+          source .venv/bin/activate
+          sqlfluff lint .
