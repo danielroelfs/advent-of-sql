@@ -156,6 +156,31 @@ toc()
 
 # Day 13 {.panel-name}
 
+**Day 13**
+
+```{bash}
+#| label: input-day13
+#| echo: false
+#| results: false
+
+psql -d advent_of_sql -a -f ./2025/day_13/input_day13.sql
+```
+
+```{r, code=readLines("./2025/day_13/query_day13.sql")}
+#| label: code-day13
+#| eval: false
+```
+
+```{r}
+#| label: day13
+#| echo: false
+#| cache: true
+
+tic()
+print(dbGetQuery(con, statement = read_file("./2025/day_13/query_day13.sql")))
+toc()
+```
+
 :::
 
 ::: {.panel}

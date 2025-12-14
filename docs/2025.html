@@ -162,6 +162,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <style>#panelset_001_day-10 {color: #409327 !important;}
 #panelset_001_day-11 {color: #409327 !important;}
 #panelset_001_day-12 {color: #409327 !important;}
+#panelset_001_day-13 {color: #409327 !important;}
 #panelset_001_day-1 {color: #D63131 !important;}
 #panelset_001_day-2 {color: #D63131 !important;}
 #panelset_001_day-3 {color: #D63131 !important;}
@@ -171,7 +172,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 #panelset_001_day-7 {color: #D63131 !important;}
 #panelset_001_day-8 {color: #D63131 !important;}
 #panelset_001_day-9 {color: #D63131 !important;}
-#panelset_001_day-13 {color: #D63131 !important;}
 #panelset_001_day-14 {color: #D63131 !important;}
 #panelset_001_day-15 {color: #D63131 !important;}
 #panelset_001_day-16 {color: #D63131 !important;}
@@ -298,12 +298,88 @@ DELETE successfully executed. 89 rows were affected.
 2       approved        477</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>0.013 sec elapsed</code></pre>
+<pre><code>0.015 sec elapsed</code></pre>
 </div>
 </div>
 </section>
 <section id="day-13" class="level1 panel-name panel">
 <h1 class="panel-name">Day 13</h1>
+<p><strong>Day 13</strong></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>WITH os <span class="fu">AS</span> (</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    SELECT</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>        volunteer_name,</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>        role AS assigned_role,</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>        CASE</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>            WHEN <span class="fu">LOWER</span>(shift_time) LIKE <span class="st">'%noon%'</span> THEN <span class="st">'12:00'</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>            WHEN shift_time LIKE <span class="st">'%10%'</span> THEN <span class="st">'10:00'</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>            WHEN shift_time LIKE <span class="st">'%2%'</span> THEN <span class="st">'14:00'</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>        END AS shift_time</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>    FROM official_shifts</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>),</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>lms <span class="fu">AS</span> (</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>    SELECT</span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>        volunteer_name,</span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>        CASE</span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>            WHEN <span class="fu">LOWER</span>(assigned_task) LIKE <span class="st">'%stage%'</span> THEN <span class="st">'stage_setup'</span></span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>            WHEN <span class="fu">LOWER</span>(assigned_task) LIKE <span class="st">'%cocoa%'</span> THEN <span class="st">'cocoa_station'</span></span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>            WHEN <span class="fu">LOWER</span>(assigned_task) LIKE <span class="st">'%parking%'</span> THEN <span class="st">'parking_support'</span></span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>            WHEN <span class="fu">LOWER</span>(assigned_task) LIKE <span class="st">'%choir%'</span> THEN <span class="st">'choir_assistant'</span></span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>            WHEN</span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a>                <span class="fu">LOWER</span>(assigned_task) LIKE <span class="st">'%handwarmer%'</span></span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a>                THEN <span class="st">'handwarmer_handout'</span></span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a>            WHEN <span class="fu">LOWER</span>(assigned_task) LIKE <span class="st">'%snow%'</span> THEN <span class="st">'snow_shoveling'</span></span>
+<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a>            WHEN <span class="fu">LOWER</span>(assigned_task) LIKE <span class="st">'%shovel%'</span> THEN <span class="st">'snow_shoveling'</span></span>
+<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a>        END AS assigned_task_clean,</span>
+<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a>        CASE</span>
+<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a>            WHEN <span class="fu">LOWER</span>(time_slot) LIKE <span class="st">'%noon%'</span> THEN <span class="st">'12:00'</span></span>
+<span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a>            WHEN time_slot LIKE <span class="st">'%10%'</span> THEN <span class="st">'10:00'</span></span>
+<span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a>            WHEN time_slot LIKE <span class="st">'%2%'</span> THEN <span class="st">'14:00'</span></span>
+<span id="cb10-31"><a href="#cb10-31" aria-hidden="true" tabindex="-1"></a>        END AS time_slot_clean</span>
+<span id="cb10-32"><a href="#cb10-32" aria-hidden="true" tabindex="-1"></a>    FROM last_minute_signups</span>
+<span id="cb10-33"><a href="#cb10-33" aria-hidden="true" tabindex="-1"></a>),</span>
+<span id="cb10-34"><a href="#cb10-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-35"><a href="#cb10-35" aria-hidden="true" tabindex="-1"></a>merged_table <span class="fu">AS</span> (</span>
+<span id="cb10-36"><a href="#cb10-36" aria-hidden="true" tabindex="-1"></a>    SELECT</span>
+<span id="cb10-37"><a href="#cb10-37" aria-hidden="true" tabindex="-1"></a>        <span class="fu">COALESCE</span>(lms.volunteer_name, os.volunteer_name) AS volunteer_name,</span>
+<span id="cb10-38"><a href="#cb10-38" aria-hidden="true" tabindex="-1"></a>        <span class="fu">COALESCE</span>(lms.assigned_task_clean, os.assigned_role) AS assigned_role,</span>
+<span id="cb10-39"><a href="#cb10-39" aria-hidden="true" tabindex="-1"></a>        <span class="fu">COALESCE</span>(lms.time_slot_clean, os.shift_time) AS shift_time</span>
+<span id="cb10-40"><a href="#cb10-40" aria-hidden="true" tabindex="-1"></a>    FROM lms</span>
+<span id="cb10-41"><a href="#cb10-41" aria-hidden="true" tabindex="-1"></a>    FULL OUTER JOIN os ON <span class="at">lms.volunteer_name =</span> os.volunteer_name</span>
+<span id="cb10-42"><a href="#cb10-42" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb10-43"><a href="#cb10-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-44"><a href="#cb10-44" aria-hidden="true" tabindex="-1"></a>SELECT DISTINCT</span>
+<span id="cb10-45"><a href="#cb10-45" aria-hidden="true" tabindex="-1"></a>    volunteer_name,</span>
+<span id="cb10-46"><a href="#cb10-46" aria-hidden="true" tabindex="-1"></a>    assigned_role,</span>
+<span id="cb10-47"><a href="#cb10-47" aria-hidden="true" tabindex="-1"></a>    shift_time</span>
+<span id="cb10-48"><a href="#cb10-48" aria-hidden="true" tabindex="-1"></a>FROM merged_table</span>
+<span id="cb10-49"><a href="#cb10-49" aria-hidden="true" tabindex="-1"></a>ORDER BY volunteer_name ASC</span>
+<span id="cb10-50"><a href="#cb10-50" aria-hidden="true" tabindex="-1"></a>LIMIT <span class="dv">15</span>;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>      volunteer_name      assigned_role shift_time
+1       Aaron Carter    parking_support      14:00
+2         Aaron Diaz    choir_assistant      14:00
+3        Aaron Evans      cocoa_station      14:00
+4      Aaron Francis handwarmer_handout      14:00
+5  Abigail Hernandez        stage_setup      10:00
+6          Adam King        stage_setup      10:00
+7        Adil Foster        stage_setup      14:00
+8        Adil Rahman        stage_setup      14:00
+9         Adrian Cox      cocoa_station      10:00
+10     Aisha Bennett      cocoa_station      14:00
+11        Aisha Khan    choir_assistant      12:00
+12    Aisha Mohammed      cocoa_station      14:00
+13       Alina Popov      cocoa_station      14:00
+14      Alina Powell    parking_support      12:00
+15      Amina Diallo    parking_support      14:00</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>0.005 sec elapsed</code></pre>
+</div>
+</div>
 </section>
 <section id="day-14" class="level1 panel-name panel">
 <h1 class="panel-name">Day 14</h1>
