@@ -14,7 +14,7 @@ fix:
 	sqlfluff fix .
 
 lint:
-	sqlfluff lint .
+	sqlfluff lint --verbose .
 
 connect:
 	psql -d advent_of_sql -a
