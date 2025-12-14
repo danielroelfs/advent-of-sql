@@ -3,8 +3,8 @@ WITH os AS (
         volunteer_name,
         role AS assigned_role,
         CASE
-            WHEN LOWER(shift_time) LIKE '%noon%' THEN '12:00'
             WHEN shift_time LIKE '%10%' THEN '10:00'
+            WHEN shift_time LIKE '%12%' THEN '12:00'
             WHEN shift_time LIKE '%2%' THEN '14:00'
         END AS shift_time
     FROM official_shifts
