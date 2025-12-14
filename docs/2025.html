@@ -163,6 +163,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 #panelset_001_day-11 {color: #409327 !important;}
 #panelset_001_day-12 {color: #409327 !important;}
 #panelset_001_day-13 {color: #409327 !important;}
+#panelset_001_day-14 {color: #409327 !important;}
 #panelset_001_day-1 {color: #D63131 !important;}
 #panelset_001_day-2 {color: #D63131 !important;}
 #panelset_001_day-3 {color: #D63131 !important;}
@@ -172,7 +173,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 #panelset_001_day-7 {color: #D63131 !important;}
 #panelset_001_day-8 {color: #D63131 !important;}
 #panelset_001_day-9 {color: #D63131 !important;}
-#panelset_001_day-14 {color: #D63131 !important;}
 #panelset_001_day-15 {color: #D63131 !important;}
 #panelset_001_day-16 {color: #D63131 !important;}
 #panelset_001_day-17 {color: #D63131 !important;}
@@ -223,7 +223,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 20                  headphones 13006</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>0.156 sec elapsed</code></pre>
+<pre><code>0.09 sec elapsed</code></pre>
 </div>
 </div>
 </section>
@@ -253,7 +253,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 6       frost-flight deluxe                1586029</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>0.088 sec elapsed</code></pre>
+<pre><code>0.099 sec elapsed</code></pre>
 </div>
 </div>
 </section>
@@ -298,7 +298,7 @@ DELETE successfully executed. 89 rows were affected.
 2       approved        477</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>0.012 sec elapsed</code></pre>
+<pre><code>0.011 sec elapsed</code></pre>
 </div>
 </div>
 </section>
@@ -377,12 +377,73 @@ DELETE successfully executed. 89 rows were affected.
 15      Amina Diallo    parking_support      14:00</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>0.003 sec elapsed</code></pre>
+<pre><code>0.002 sec elapsed</code></pre>
 </div>
 </div>
 </section>
 <section id="day-14" class="level1 panel-name panel">
 <h1 class="panel-name">Day 14</h1>
+<p><strong>Day 14</strong></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>WITH total_counts <span class="fu">AS</span> (</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    SELECT</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>        user_name,</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>        artist,</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>        <span class="fu">COUNT</span>(artist) AS count</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    FROM listening_logs</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>    WHERE played_at <span class="sc">&gt;</span> <span class="st">'2025-01-01'</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>    GROUP BY user_name, artist</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>SELECT</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>    user_name,</span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>    artist,</span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>    count</span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>FROM</span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>    (</span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>        SELECT</span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>            <span class="sc">*</span>,</span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>            <span class="fu">ROW_NUMBER</span>() <span class="fu">OVER</span> (PARTITION BY</span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>                user_name</span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>            ORDER BY count DESC) AS user_count</span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a>        FROM total_counts</span>
+<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a>    ) AS tc</span>
+<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a>WHERE user_count <span class="sc">&lt;</span> <span class="dv">4</span></span>
+<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a>ORDER BY user_name ASC, count DESC</span>
+<span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a>LIMIT <span class="dv">24</span>;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>           user_name                       artist count
+1  Abigail Hernandez                   Ed Sheeran    78
+2  Abigail Hernandez                 Rotten Mango    15
+3  Abigail Hernandez                Billie Eilish     4
+4         Adrian Cox               Kendrick Lamar   128
+5         Adrian Cox        Stuff You Should Know    30
+6         Adrian Cox                   Pentatonix     6
+7        Alex Rivera                   Ed Sheeran   274
+8        Alex Rivera Call Her Daddy (Alex Cooper)    42
+9        Alex Rivera                    Green Day    11
+10    Anders Nilsson                  Snow Patrol   101
+11    Anders Nilsson                    SmartLess    29
+12    Anders Nilsson                    Blink-182     5
+13      Anthony King                   Pentatonix   114
+14      Anthony King      The Tucker Carlson Show    14
+15      Anthony King                  The Beatles     5
+16       Anya Pavlov                     Coldplay   135
+17       Anya Pavlov   Just Creepy: Scary Stories    19
+18       Anya Pavlov                Ariana Grande     5
+19       Ava Morales            Angels &amp; Airwaves    90
+20       Ava Morales   Just Creepy: Scary Stories    23
+21       Ava Morales                 Foo Fighters     5
+22    Benjamin Davis                     Coldplay    93
+23    Benjamin Davis                Billie Eilish     6
+24    Benjamin Davis             Mostly Technical     6</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>0.009 sec elapsed</code></pre>
+</div>
+</div>
 </section>
 <section id="day-15" class="level1 panel-name panel">
 <h1 class="panel-name">Day 15</h1>
