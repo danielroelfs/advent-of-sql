@@ -166,6 +166,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 #panelset_001_day-14 {color: #409327 !important;}
 #panelset_001_day-15 {color: #409327 !important;}
 #panelset_001_day-16 {color: #409327 !important;}
+#panelset_001_day-17 {color: #409327 !important;}
 #panelset_001_day-1 {color: #D63131 !important;}
 #panelset_001_day-2 {color: #D63131 !important;}
 #panelset_001_day-3 {color: #D63131 !important;}
@@ -175,7 +176,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 #panelset_001_day-7 {color: #D63131 !important;}
 #panelset_001_day-8 {color: #D63131 !important;}
 #panelset_001_day-9 {color: #D63131 !important;}
-#panelset_001_day-17 {color: #D63131 !important;}
 #panelset_001_day-18 {color: #D63131 !important;}
 #panelset_001_day-19 {color: #D63131 !important;}
 #panelset_001_day-20 {color: #D63131 !important;}
@@ -253,7 +253,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 6       frost-flight deluxe                1586029</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>0.117 sec elapsed</code></pre>
+<pre><code>0.119 sec elapsed</code></pre>
 </div>
 </div>
 </section>
@@ -298,7 +298,7 @@ DELETE successfully executed. 89 rows were affected.
 2       approved        477</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>0.018 sec elapsed</code></pre>
+<pre><code>0.01 sec elapsed</code></pre>
 </div>
 </div>
 </section>
@@ -377,7 +377,7 @@ DELETE successfully executed. 89 rows were affected.
 15      Amina Diallo    parking_support      14:00</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>0.003 sec elapsed</code></pre>
+<pre><code>0.002 sec elapsed</code></pre>
 </div>
 </div>
 </section>
@@ -441,7 +441,7 @@ DELETE successfully executed. 89 rows were affected.
 24    Benjamin Davis             Mostly Technical     6</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>0.01 sec elapsed</code></pre>
+<pre><code>0.009 sec elapsed</code></pre>
 </div>
 </div>
 </section>
@@ -508,7 +508,7 @@ DELETE successfully executed. 89 rows were affected.
 25      2025-12-15 Isaac Andersson</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>0.006 sec elapsed</code></pre>
+<pre><code>0.005 sec elapsed</code></pre>
 </div>
 </div>
 </section>
@@ -585,6 +585,81 @@ DELETE successfully executed. 89 rows were affected.
 </section>
 <section id="day-17" class="level1 panel-name panel">
 <h1 class="panel-name">Day 17</h1>
+<p><strong>Day 17</strong></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>WITH last_score <span class="fu">AS</span> (</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>    SELECT <span class="fu">MAX</span>(id) AS last_id</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>    FROM price_changes</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>    GROUP BY product_id</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>),</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>price_calculations <span class="fu">AS</span> (</span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>    SELECT</span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>        pid.id,</span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>        pd.product_name,</span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>        pid.price AS current_price,</span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>        <span class="fu">LAG</span>(pid.price)</span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a>            <span class="fu">OVER</span> (</span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a>                PARTITION BY pd.product_name</span>
+<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a>                ORDER BY pid.effective_timestamp ASC</span>
+<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a>            )</span>
+<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a>            AS previous_price,</span>
+<span id="cb22-18"><a href="#cb22-18" aria-hidden="true" tabindex="-1"></a>        pid.price</span>
+<span id="cb22-19"><a href="#cb22-19" aria-hidden="true" tabindex="-1"></a>        <span class="sc">-</span> <span class="fu">LAG</span>(pid.price)</span>
+<span id="cb22-20"><a href="#cb22-20" aria-hidden="true" tabindex="-1"></a>            <span class="fu">OVER</span> (</span>
+<span id="cb22-21"><a href="#cb22-21" aria-hidden="true" tabindex="-1"></a>                PARTITION BY pd.product_name</span>
+<span id="cb22-22"><a href="#cb22-22" aria-hidden="true" tabindex="-1"></a>                ORDER BY pid.effective_timestamp ASC</span>
+<span id="cb22-23"><a href="#cb22-23" aria-hidden="true" tabindex="-1"></a>            )</span>
+<span id="cb22-24"><a href="#cb22-24" aria-hidden="true" tabindex="-1"></a>            AS price_diff</span>
+<span id="cb22-25"><a href="#cb22-25" aria-hidden="true" tabindex="-1"></a>    FROM price_changes AS pid</span>
+<span id="cb22-26"><a href="#cb22-26" aria-hidden="true" tabindex="-1"></a>    INNER JOIN products AS pd</span>
+<span id="cb22-27"><a href="#cb22-27" aria-hidden="true" tabindex="-1"></a>        ON <span class="at">pid.product_id =</span> pd.product_id</span>
+<span id="cb22-28"><a href="#cb22-28" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb22-29"><a href="#cb22-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-30"><a href="#cb22-30" aria-hidden="true" tabindex="-1"></a>SELECT</span>
+<span id="cb22-31"><a href="#cb22-31" aria-hidden="true" tabindex="-1"></a>    product_name,</span>
+<span id="cb22-32"><a href="#cb22-32" aria-hidden="true" tabindex="-1"></a>    current_price,</span>
+<span id="cb22-33"><a href="#cb22-33" aria-hidden="true" tabindex="-1"></a>    previous_price,</span>
+<span id="cb22-34"><a href="#cb22-34" aria-hidden="true" tabindex="-1"></a>    price_diff</span>
+<span id="cb22-35"><a href="#cb22-35" aria-hidden="true" tabindex="-1"></a>FROM price_calculations</span>
+<span id="cb22-36"><a href="#cb22-36" aria-hidden="true" tabindex="-1"></a>WHERE</span>
+<span id="cb22-37"><a href="#cb22-37" aria-hidden="true" tabindex="-1"></a>    id <span class="fu">IN</span> (SELECT ls.last_id FROM last_score AS ls)</span>
+<span id="cb22-38"><a href="#cb22-38" aria-hidden="true" tabindex="-1"></a>ORDER BY product_name ASC</span>
+<span id="cb22-39"><a href="#cb22-39" aria-hidden="true" tabindex="-1"></a>LIMIT <span class="dv">25</span>;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>                      product_name current_price previous_price price_diff
+1                   Classic Candle         49.55          57.05      -7.50
+2    Classic Cookie Decorating Kit        243.09         214.65      28.44
+3             Classic Cookware Set         66.24          79.06     -12.82
+4            Classic Festive Scarf         67.10          61.20       5.90
+5         Classic Holiday Jam Trio         15.99          18.89      -2.90
+6                      Classic Mug        173.05         157.02      16.03
+7                  Classic Notepad        120.49         122.23      -1.74
+8                 Classic Ornament         35.05          30.25       4.80
+9      Classic Pecan Praline Bites         45.42          41.74       3.68
+10         Classic Roasted Cashews        257.33         223.63      33.70
+11                    Classic Sled        193.40         166.11      27.29
+12 Classic White Chocolate Popcorn         40.38          47.51      -7.13
+13             Cozy Almond Brittle        107.21         116.42      -9.21
+14                 Cozy Board Game         39.20          45.96      -6.76
+15                     Cozy Candle        105.68          91.49      14.19
+16               Cozy Cookware Set        106.87          89.35      17.52
+17           Cozy Fruit Assortment         30.08          25.79       4.29
+18                       Cozy Lamp        138.36         170.15     -31.79
+19                    Cozy Notepad        102.78         106.04      -3.26
+20        Cozy Pecan Praline Bites         22.24          18.69       3.55
+21                     Cozy Puzzle        209.20         227.24     -18.04
+22          Cozy Reindeer Headband        215.40         196.31      19.09
+23        Cozy Scented Pine Sachet        152.76         159.88      -7.12
+24             Cozy Trail Mix Trio        107.81         101.09       6.72
+25    Cozy White Chocolate Popcorn         74.78          71.58       3.20</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>0.006 sec elapsed</code></pre>
+</div>
+</div>
 </section>
 <section id="day-18" class="level1 panel-name panel">
 <h1 class="panel-name">Day 18</h1>
