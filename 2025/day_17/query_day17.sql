@@ -14,14 +14,7 @@ price_calculations AS (
                 PARTITION BY pd.product_name
                 ORDER BY pid.effective_timestamp ASC
             )
-            AS previous_price,
-        pid.price
-        - LAG(pid.price)
-            OVER (
-                PARTITION BY pd.product_name
-                ORDER BY pid.effective_timestamp ASC
-            )
-            AS price_diff
+            AS previous_price
     FROM price_changes AS pid
     INNER JOIN products AS pd
         ON pid.product_id = pd.product_id
@@ -31,7 +24,7 @@ SELECT
     product_name,
     current_price,
     previous_price,
-    price_diff
+    current_price - previous_price AS price_diff
 FROM price_calculations
 WHERE
     id IN (SELECT ls.last_id FROM last_score AS ls)
