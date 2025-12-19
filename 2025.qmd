@@ -350,6 +350,46 @@ toc()
 
 # Day 19 {.panel-name}
 
+**Day 19**
+
+```{bash}
+#| label: input-day19
+#| echo: false
+#| results: false
+
+psql -d advent_of_sql -a -f ./2025/day_19/input_day19.sql
+```
+
+```{r, code=readLines("./2025/day_19/query_day19.sql")}
+#| label: code-day19
+#| eval: false
+```
+
+```{r}
+#| label: day19
+#| echo: false
+#| cache: false
+
+entire_query <- read_file("./2025/day_19/query_day19.sql")
+
+n_queries <- str_count(entire_query, ";")
+
+queries <- str_split_fixed(entire_query, ";", n_queries)
+
+tic()
+for (i in seq_along(queries)) {
+  if (i == n_queries) {
+    print(str_glue("\n\n"))
+    print(dbGetQuery(con, statement = queries[i]))
+  } else {
+    command_run <- str_to_upper(word(queries[i], 1))
+    n_rows_affected = dbExecute(con, statement = queries[i])
+    print(str_glue("{command_run} successfully executed. {n_rows_affected} rows were affected."))
+  }
+}
+toc()
+```
+
 :::
 
 ::: {.panel}
