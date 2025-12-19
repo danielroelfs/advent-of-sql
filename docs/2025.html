@@ -167,6 +167,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 #panelset_001_day-15 {color: #409327 !important;}
 #panelset_001_day-16 {color: #409327 !important;}
 #panelset_001_day-17 {color: #409327 !important;}
+#panelset_001_day-18 {color: #409327 !important;}
 #panelset_001_day-1 {color: #D63131 !important;}
 #panelset_001_day-2 {color: #D63131 !important;}
 #panelset_001_day-3 {color: #D63131 !important;}
@@ -176,7 +177,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 #panelset_001_day-7 {color: #D63131 !important;}
 #panelset_001_day-8 {color: #D63131 !important;}
 #panelset_001_day-9 {color: #D63131 !important;}
-#panelset_001_day-18 {color: #D63131 !important;}
 #panelset_001_day-19 {color: #D63131 !important;}
 #panelset_001_day-20 {color: #D63131 !important;}
 #panelset_001_day-21 {color: #D63131 !important;}
@@ -298,7 +298,7 @@ DELETE successfully executed. 89 rows were affected.
 2       approved        477</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>0.011 sec elapsed</code></pre>
+<pre><code>0.014 sec elapsed</code></pre>
 </div>
 </div>
 </section>
@@ -656,6 +656,87 @@ DELETE successfully executed. 89 rows were affected.
 </section>
 <section id="day-18" class="level1 panel-name panel">
 <h1 class="panel-name">Day 18</h1>
+<p><strong>Day 18</strong></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>WITH latest_order <span class="fu">AS</span> (</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>    SELECT</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>        customer_id,</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>        <span class="fu">MAX</span>(created_at) AS latest_date</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>    FROM orders</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>    GROUP BY customer_id</span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>SELECT</span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>    ord.customer_id,</span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>    ((ord.order_data<span class="sc">::</span>json <span class="ot">-&gt;&gt;</span> <span class="st">'gift'</span>)<span class="sc">::</span>json <span class="ot">-&gt;&gt;</span> <span class="st">'wrapped'</span>)<span class="sc">::</span>boolean</span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>        AS gift_wrap,</span>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a>    (ord.order_data<span class="sc">::</span>json <span class="ot">-&gt;&gt;</span> <span class="st">'shipping'</span>)<span class="sc">::</span>json <span class="ot">-&gt;&gt;</span> <span class="st">'method'</span> AS shipping_method,</span>
+<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a>    (ord.order_data<span class="sc">::</span>json <span class="ot">-&gt;&gt;</span> <span class="st">'risk'</span>)<span class="sc">::</span>json <span class="ot">-&gt;&gt;</span> <span class="st">'flag'</span> AS risk</span>
+<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a>FROM orders AS ord</span>
+<span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a>INNER JOIN</span>
+<span id="cb25-17"><a href="#cb25-17" aria-hidden="true" tabindex="-1"></a>    latest_order AS lo</span>
+<span id="cb25-18"><a href="#cb25-18" aria-hidden="true" tabindex="-1"></a>    ON</span>
+<span id="cb25-19"><a href="#cb25-19" aria-hidden="true" tabindex="-1"></a>        ord.customer_id <span class="ot">=</span> lo.customer_id</span>
+<span id="cb25-20"><a href="#cb25-20" aria-hidden="true" tabindex="-1"></a>        AND ord.created_at <span class="ot">=</span> lo.latest_date</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>   customer_id gift_wrap shipping_method   risk
+1            1     FALSE         express   &lt;NA&gt;
+2            2     FALSE        standard   &lt;NA&gt;
+3            3      TRUE        standard   high
+4            4     FALSE         express   &lt;NA&gt;
+5            5      TRUE       overnight   &lt;NA&gt;
+6            6      TRUE       overnight   &lt;NA&gt;
+7            7     FALSE         express   &lt;NA&gt;
+8            8     FALSE       overnight   &lt;NA&gt;
+9            9      TRUE         express   &lt;NA&gt;
+10          10     FALSE        standard medium
+11          11      TRUE        standard medium
+12          12      TRUE        standard medium
+13          13      TRUE        standard   &lt;NA&gt;
+14          14      TRUE        standard   &lt;NA&gt;
+15          15     FALSE         express medium
+16          16     FALSE         express   &lt;NA&gt;
+17          17     FALSE        standard   &lt;NA&gt;
+18          18     FALSE       overnight    low
+19          19     FALSE        standard   &lt;NA&gt;
+20          20     FALSE       overnight   &lt;NA&gt;
+21          21      TRUE       overnight   &lt;NA&gt;
+22          22     FALSE        standard medium
+23          23     FALSE         express   &lt;NA&gt;
+24          24     FALSE       overnight   &lt;NA&gt;
+25          25      TRUE       overnight   high
+26          26     FALSE        standard    low
+27          27      TRUE        standard   &lt;NA&gt;
+28          28     FALSE        standard    low
+29          29      TRUE       overnight   high
+30          30     FALSE       overnight medium
+31          31     FALSE         express   &lt;NA&gt;
+32          32     FALSE       overnight   &lt;NA&gt;
+33          33      TRUE         express   &lt;NA&gt;
+34          34     FALSE         express   &lt;NA&gt;
+35          35      TRUE         express   high
+36          36      TRUE       overnight   &lt;NA&gt;
+37          37      TRUE       overnight   &lt;NA&gt;
+38          38      TRUE        standard   &lt;NA&gt;
+39          39      TRUE       overnight   &lt;NA&gt;
+40          40     FALSE         express   &lt;NA&gt;
+41          41     FALSE        standard   high
+42          42     FALSE       overnight medium
+43          43      TRUE         express   &lt;NA&gt;
+44          44      TRUE        standard   &lt;NA&gt;
+45          45     FALSE        standard   &lt;NA&gt;
+46          46     FALSE        standard   &lt;NA&gt;
+47          47     FALSE        standard   &lt;NA&gt;
+48          48      TRUE        standard   &lt;NA&gt;
+49          49      TRUE         express   high
+50          50      TRUE         express    low</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>0.004 sec elapsed</code></pre>
+</div>
+</div>
 </section>
 <section id="day-19" class="level1 panel-name panel">
 <h1 class="panel-name">Day 19</h1>
