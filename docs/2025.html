@@ -749,7 +749,7 @@ DELETE successfully executed. 89 rows were affected.
 <span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>    delivery_location,</span>
 <span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>    gift_name,</span>
 <span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>    scheduled_at,</span>
-<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">date_trunc</span>(<span class="st">'minute'</span>, <span class="fu">now</span>()) AS flagged_at,</span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">DATE_TRUNC</span>(<span class="st">'minute'</span>, <span class="fu">NOW</span>()) AS flagged_at,</span>
 <span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Invalid delivery location'</span> AS reason</span>
 <span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>FROM deliveries</span>
 <span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a>WHERE</span>
@@ -766,8 +766,9 @@ DELETE successfully executed. 89 rows were affected.
 <span id="cb28-22"><a href="#cb28-22" aria-hidden="true" tabindex="-1"></a>    flagged_at,</span>
 <span id="cb28-23"><a href="#cb28-23" aria-hidden="true" tabindex="-1"></a>    reason</span>
 <span id="cb28-24"><a href="#cb28-24" aria-hidden="true" tabindex="-1"></a>FROM misdelivered_presents</span>
-<span id="cb28-25"><a href="#cb28-25" aria-hidden="true" tabindex="-1"></a>WHERE flagged_at <span class="ot">=</span> <span class="fu">date_trunc</span>(<span class="st">'minute'</span>, <span class="fu">now</span>())</span>
-<span id="cb28-26"><a href="#cb28-26" aria-hidden="true" tabindex="-1"></a>LIMIT <span class="dv">25</span>;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb28-25"><a href="#cb28-25" aria-hidden="true" tabindex="-1"></a>WHERE flagged_at <span class="ot">=</span> <span class="fu">DATE_TRUNC</span>(<span class="st">'minute'</span>, <span class="fu">NOW</span>())</span>
+<span id="cb28-26"><a href="#cb28-26" aria-hidden="true" tabindex="-1"></a>ORDER BY id</span>
+<span id="cb28-27"><a href="#cb28-27" aria-hidden="true" tabindex="-1"></a>LIMIT <span class="dv">25</span>;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
@@ -800,31 +801,31 @@ DELETE successfully executed. 89 rows were affected.
 24 123    Lena F.            The Vibes       plush reindeer 2025-12-24 19:03:00
 25 125    Hiro T.            The Vibes            robot toy 2025-12-24 21:11:00
             flagged_at                    reason
-1  2025-12-19 16:26:00 Invalid delivery location
-2  2025-12-19 16:26:00 Invalid delivery location
-3  2025-12-19 16:26:00 Invalid delivery location
-4  2025-12-19 16:26:00 Invalid delivery location
-5  2025-12-19 16:26:00 Invalid delivery location
-6  2025-12-19 16:26:00 Invalid delivery location
-7  2025-12-19 16:26:00 Invalid delivery location
-8  2025-12-19 16:26:00 Invalid delivery location
-9  2025-12-19 16:26:00 Invalid delivery location
-10 2025-12-19 16:26:00 Invalid delivery location
-11 2025-12-19 16:26:00 Invalid delivery location
-12 2025-12-19 16:26:00 Invalid delivery location
-13 2025-12-19 16:26:00 Invalid delivery location
-14 2025-12-19 16:26:00 Invalid delivery location
-15 2025-12-19 16:26:00 Invalid delivery location
-16 2025-12-19 16:26:00 Invalid delivery location
-17 2025-12-19 16:26:00 Invalid delivery location
-18 2025-12-19 16:26:00 Invalid delivery location
-19 2025-12-19 16:26:00 Invalid delivery location
-20 2025-12-19 16:26:00 Invalid delivery location
-21 2025-12-19 16:26:00 Invalid delivery location
-22 2025-12-19 16:26:00 Invalid delivery location
-23 2025-12-19 16:26:00 Invalid delivery location
-24 2025-12-19 16:26:00 Invalid delivery location
-25 2025-12-19 16:26:00 Invalid delivery location</code></pre>
+1  2025-12-19 16:28:00 Invalid delivery location
+2  2025-12-19 16:28:00 Invalid delivery location
+3  2025-12-19 16:28:00 Invalid delivery location
+4  2025-12-19 16:28:00 Invalid delivery location
+5  2025-12-19 16:28:00 Invalid delivery location
+6  2025-12-19 16:28:00 Invalid delivery location
+7  2025-12-19 16:28:00 Invalid delivery location
+8  2025-12-19 16:28:00 Invalid delivery location
+9  2025-12-19 16:28:00 Invalid delivery location
+10 2025-12-19 16:28:00 Invalid delivery location
+11 2025-12-19 16:28:00 Invalid delivery location
+12 2025-12-19 16:28:00 Invalid delivery location
+13 2025-12-19 16:28:00 Invalid delivery location
+14 2025-12-19 16:28:00 Invalid delivery location
+15 2025-12-19 16:28:00 Invalid delivery location
+16 2025-12-19 16:28:00 Invalid delivery location
+17 2025-12-19 16:28:00 Invalid delivery location
+18 2025-12-19 16:28:00 Invalid delivery location
+19 2025-12-19 16:28:00 Invalid delivery location
+20 2025-12-19 16:28:00 Invalid delivery location
+21 2025-12-19 16:28:00 Invalid delivery location
+22 2025-12-19 16:28:00 Invalid delivery location
+23 2025-12-19 16:28:00 Invalid delivery location
+24 2025-12-19 16:28:00 Invalid delivery location
+25 2025-12-19 16:28:00 Invalid delivery location</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>0.007 sec elapsed</code></pre>

@@ -5,7 +5,7 @@ SELECT
     delivery_location,
     gift_name,
     scheduled_at,
-    date_trunc('minute', now()) AS flagged_at,
+    DATE_TRUNC('minute', NOW()) AS flagged_at,
     'Invalid delivery location' AS reason
 FROM deliveries
 WHERE
@@ -22,5 +22,6 @@ SELECT
     flagged_at,
     reason
 FROM misdelivered_presents
-WHERE flagged_at = date_trunc('minute', now())
+WHERE flagged_at = DATE_TRUNC('minute', NOW())
+ORDER BY id
 LIMIT 25;
