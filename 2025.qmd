@@ -396,6 +396,8 @@ toc()
 
 # Day 20 {.panel-name}
 
+I think Aaron forgot to upload the inserts for this day, since it was not available for download. And I was too lazy to use the online playground thingy.
+
 :::
 
 ::: {.panel}
