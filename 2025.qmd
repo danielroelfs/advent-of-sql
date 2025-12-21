@@ -396,13 +396,63 @@ toc()
 
 # Day 20 {.panel-name}
 
-I think Aaron forgot to upload the inserts for this day, since it was not available for download. And I was too lazy to use the online playground thingy.
+**Day 20**
+
+```{bash}
+#| label: input-day20
+#| echo: false
+#| results: false
+
+psql -d advent_of_sql -a -f ./2025/day_20/input_day20.sql
+```
+
+```{r, code=readLines("./2025/day_20/query_day20.sql")}
+#| label: code-day20
+#| eval: false
+```
+
+```{r}
+#| label: day20
+#| echo: false
+#| cache: true
+
+tic()
+print(dbGetQuery(con, statement = read_file("./2025/day_20/query_day20.sql")))
+toc()
+```
 
 :::
 
 ::: {.panel}
 
 # Day 21 {.panel-name}
+
+**Day 21**
+
+This isn't entirely what he wanted, but this one at least has some practical usecase for me personally.
+
+```{bash}
+#| label: input-day21
+#| echo: false
+#| results: false
+
+psql -d advent_of_sql -a -f ./2025/day_21/input_day21.sql
+```
+
+```{r, code=readLines("./2025/day_21/query_day21.sql")}
+#| label: code-day21
+#| eval: false
+```
+
+```{r}
+#| label: day21
+#| echo: false
+#| cache: true
+
+tic()
+print(dbGetQuery(con, statement = read_file("./2025/day_21/query_day21.sql")))
+toc()
+```
 
 :::
 
