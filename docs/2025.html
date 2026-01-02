@@ -298,7 +298,7 @@ DELETE successfully executed. 89 rows were affected.
 2       approved        477</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>0.014 sec elapsed</code></pre>
+<pre><code>0.013 sec elapsed</code></pre>
 </div>
 </div>
 </section>
@@ -801,31 +801,31 @@ DELETE successfully executed. 89 rows were affected.
 24 123    Lena F.            The Vibes       plush reindeer 2025-12-24 19:03:00
 25 125    Hiro T.            The Vibes            robot toy 2025-12-24 21:11:00
             flagged_at                    reason
-1  2026-01-02 12:36:00 Invalid delivery location
-2  2026-01-02 12:36:00 Invalid delivery location
-3  2026-01-02 12:36:00 Invalid delivery location
-4  2026-01-02 12:36:00 Invalid delivery location
-5  2026-01-02 12:36:00 Invalid delivery location
-6  2026-01-02 12:36:00 Invalid delivery location
-7  2026-01-02 12:36:00 Invalid delivery location
-8  2026-01-02 12:36:00 Invalid delivery location
-9  2026-01-02 12:36:00 Invalid delivery location
-10 2026-01-02 12:36:00 Invalid delivery location
-11 2026-01-02 12:36:00 Invalid delivery location
-12 2026-01-02 12:36:00 Invalid delivery location
-13 2026-01-02 12:36:00 Invalid delivery location
-14 2026-01-02 12:36:00 Invalid delivery location
-15 2026-01-02 12:36:00 Invalid delivery location
-16 2026-01-02 12:36:00 Invalid delivery location
-17 2026-01-02 12:36:00 Invalid delivery location
-18 2026-01-02 12:36:00 Invalid delivery location
-19 2026-01-02 12:36:00 Invalid delivery location
-20 2026-01-02 12:36:00 Invalid delivery location
-21 2026-01-02 12:36:00 Invalid delivery location
-22 2026-01-02 12:36:00 Invalid delivery location
-23 2026-01-02 12:36:00 Invalid delivery location
-24 2026-01-02 12:36:00 Invalid delivery location
-25 2026-01-02 12:36:00 Invalid delivery location</code></pre>
+1  2026-01-02 12:38:00 Invalid delivery location
+2  2026-01-02 12:38:00 Invalid delivery location
+3  2026-01-02 12:38:00 Invalid delivery location
+4  2026-01-02 12:38:00 Invalid delivery location
+5  2026-01-02 12:38:00 Invalid delivery location
+6  2026-01-02 12:38:00 Invalid delivery location
+7  2026-01-02 12:38:00 Invalid delivery location
+8  2026-01-02 12:38:00 Invalid delivery location
+9  2026-01-02 12:38:00 Invalid delivery location
+10 2026-01-02 12:38:00 Invalid delivery location
+11 2026-01-02 12:38:00 Invalid delivery location
+12 2026-01-02 12:38:00 Invalid delivery location
+13 2026-01-02 12:38:00 Invalid delivery location
+14 2026-01-02 12:38:00 Invalid delivery location
+15 2026-01-02 12:38:00 Invalid delivery location
+16 2026-01-02 12:38:00 Invalid delivery location
+17 2026-01-02 12:38:00 Invalid delivery location
+18 2026-01-02 12:38:00 Invalid delivery location
+19 2026-01-02 12:38:00 Invalid delivery location
+20 2026-01-02 12:38:00 Invalid delivery location
+21 2026-01-02 12:38:00 Invalid delivery location
+22 2026-01-02 12:38:00 Invalid delivery location
+23 2026-01-02 12:38:00 Invalid delivery location
+24 2026-01-02 12:38:00 Invalid delivery location
+25 2026-01-02 12:38:00 Invalid delivery location</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>0.008 sec elapsed</code></pre>
@@ -970,7 +970,7 @@ DELETE successfully executed. 89 rows were affected.
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>SELECT</span>
 <span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>    vehicle_id,</span>
 <span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>    departure_time,</span>
-<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">SUM</span>(<span class="fu">ARRAY_LENGTH</span>(<span class="fu">XPATH</span>(<span class="st">'//passenger/name/text()'</span>, manifest_xml), <span class="dv">1</span>)) AS n_passengers</span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">SUM</span>(<span class="fu">ARRAY_LENGTH</span>(<span class="fu">XPATH</span>(<span class="st">'//passenger/name/text()'</span>, manifest_xml), <span class="dv">1</span>)) AS n_passengers <span class="sc">--</span>noqa<span class="sc">:</span> LT05</span>
 <span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>FROM travel_manifests</span>
 <span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>WHERE <span class="fu">UPPER</span>(vehicle_id) LIKE <span class="st">'CARGO%'</span></span>
 <span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>GROUP BY vehicle_id, departure_time</span>
