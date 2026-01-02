@@ -491,11 +491,44 @@ toc()
 
 # Day 23 {.panel-name}
 
+**Day 23**
+
+Nope, not even going to try this one.
+
 :::
 
 ::: {.panel}
 
 # Day 24 {.panel-name}
+
+**Day 24**
+
+```{bash}
+#| label: input-day24
+#| echo: false
+#| results: false
+
+psql -d advent_of_sql -a -f ./2025/day_24/input_day24.sql
+```
+
+```{r, code=readLines("./2025/day_24/query_day24.sql")}
+#| label: code-day24
+#| eval: false
+```
+
+```{r}
+#| label: day24
+#| echo: false
+#| cache: true
+
+tic()
+print(dbGetQuery(con, statement = read_file("./2025/day_24/query_day24.sql")))
+toc()
+```
+
+I suppose the answer was supposed to be `'ADVENTOFSQL'`, but there wasn't a row labeled `'primary_source'` in the input file I downloaded with the letter 'D', so I think it's a data issue. I got the same result when I tried the online playground thing.
+
+Last challenge, was a nice Advent of SQL this year! 👏🏻 Lot of work went into this once again. 
 
 :::
 
