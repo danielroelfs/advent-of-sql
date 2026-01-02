@@ -171,6 +171,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 #panelset_001_day-19 {color: #409327 !important;}
 #panelset_001_day-20 {color: #409327 !important;}
 #panelset_001_day-21 {color: #409327 !important;}
+#panelset_001_day-22 {color: #409327 !important;}
 #panelset_001_day-1 {color: #D63131 !important;}
 #panelset_001_day-2 {color: #D63131 !important;}
 #panelset_001_day-3 {color: #D63131 !important;}
@@ -180,7 +181,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 #panelset_001_day-7 {color: #D63131 !important;}
 #panelset_001_day-8 {color: #D63131 !important;}
 #panelset_001_day-9 {color: #D63131 !important;}
-#panelset_001_day-22 {color: #D63131 !important;}
 #panelset_001_day-23 {color: #D63131 !important;}
 #panelset_001_day-24 {color: #D63131 !important;}</style>
 </div>
@@ -298,7 +298,7 @@ DELETE successfully executed. 89 rows were affected.
 2       approved        477</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>0.01 sec elapsed</code></pre>
+<pre><code>0.014 sec elapsed</code></pre>
 </div>
 </div>
 </section>
@@ -801,34 +801,34 @@ DELETE successfully executed. 89 rows were affected.
 24 123    Lena F.            The Vibes       plush reindeer 2025-12-24 19:03:00
 25 125    Hiro T.            The Vibes            robot toy 2025-12-24 21:11:00
             flagged_at                    reason
-1  2025-12-21 15:31:00 Invalid delivery location
-2  2025-12-21 15:31:00 Invalid delivery location
-3  2025-12-21 15:31:00 Invalid delivery location
-4  2025-12-21 15:31:00 Invalid delivery location
-5  2025-12-21 15:31:00 Invalid delivery location
-6  2025-12-21 15:31:00 Invalid delivery location
-7  2025-12-21 15:31:00 Invalid delivery location
-8  2025-12-21 15:31:00 Invalid delivery location
-9  2025-12-21 15:31:00 Invalid delivery location
-10 2025-12-21 15:31:00 Invalid delivery location
-11 2025-12-21 15:31:00 Invalid delivery location
-12 2025-12-21 15:31:00 Invalid delivery location
-13 2025-12-21 15:31:00 Invalid delivery location
-14 2025-12-21 15:31:00 Invalid delivery location
-15 2025-12-21 15:31:00 Invalid delivery location
-16 2025-12-21 15:31:00 Invalid delivery location
-17 2025-12-21 15:31:00 Invalid delivery location
-18 2025-12-21 15:31:00 Invalid delivery location
-19 2025-12-21 15:31:00 Invalid delivery location
-20 2025-12-21 15:31:00 Invalid delivery location
-21 2025-12-21 15:31:00 Invalid delivery location
-22 2025-12-21 15:31:00 Invalid delivery location
-23 2025-12-21 15:31:00 Invalid delivery location
-24 2025-12-21 15:31:00 Invalid delivery location
-25 2025-12-21 15:31:00 Invalid delivery location</code></pre>
+1  2026-01-02 12:36:00 Invalid delivery location
+2  2026-01-02 12:36:00 Invalid delivery location
+3  2026-01-02 12:36:00 Invalid delivery location
+4  2026-01-02 12:36:00 Invalid delivery location
+5  2026-01-02 12:36:00 Invalid delivery location
+6  2026-01-02 12:36:00 Invalid delivery location
+7  2026-01-02 12:36:00 Invalid delivery location
+8  2026-01-02 12:36:00 Invalid delivery location
+9  2026-01-02 12:36:00 Invalid delivery location
+10 2026-01-02 12:36:00 Invalid delivery location
+11 2026-01-02 12:36:00 Invalid delivery location
+12 2026-01-02 12:36:00 Invalid delivery location
+13 2026-01-02 12:36:00 Invalid delivery location
+14 2026-01-02 12:36:00 Invalid delivery location
+15 2026-01-02 12:36:00 Invalid delivery location
+16 2026-01-02 12:36:00 Invalid delivery location
+17 2026-01-02 12:36:00 Invalid delivery location
+18 2026-01-02 12:36:00 Invalid delivery location
+19 2026-01-02 12:36:00 Invalid delivery location
+20 2026-01-02 12:36:00 Invalid delivery location
+21 2026-01-02 12:36:00 Invalid delivery location
+22 2026-01-02 12:36:00 Invalid delivery location
+23 2026-01-02 12:36:00 Invalid delivery location
+24 2026-01-02 12:36:00 Invalid delivery location
+25 2026-01-02 12:36:00 Invalid delivery location</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>0.007 sec elapsed</code></pre>
+<pre><code>0.008 sec elapsed</code></pre>
 </div>
 </div>
 </section>
@@ -965,15 +965,37 @@ DELETE successfully executed. 89 rows were affected.
 </section>
 <section id="day-22" class="level1 panel-name panel">
 <h1 class="panel-name">Day 22</h1>
+<p><strong>Day 22</strong></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>SELECT</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>    vehicle_id,</span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>    departure_time,</span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">SUM</span>(<span class="fu">ARRAY_LENGTH</span>(<span class="fu">XPATH</span>(<span class="st">'//passenger/name/text()'</span>, manifest_xml), <span class="dv">1</span>)) AS n_passengers</span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>FROM travel_manifests</span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>WHERE <span class="fu">UPPER</span>(vehicle_id) LIKE <span class="st">'CARGO%'</span></span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>GROUP BY vehicle_id, departure_time</span>
+<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a>HAVING <span class="fu">SUM</span>(<span class="fu">ARRAY_LENGTH</span>(<span class="fu">XPATH</span>(<span class="st">'//passenger/name/text()'</span>, manifest_xml), <span class="dv">1</span>)) <span class="sc">&gt;</span> <span class="dv">20</span></span>
+<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a>ORDER BY departure_time;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>  vehicle_id      departure_time n_passengers
+1   CARGO-12 2025-12-22 18:00:00           28
+2   CARGO-12 2025-12-22 23:00:00           24
+3   CARGO-12 2025-12-23 04:00:00           38
+4   CARGO-12 2025-12-23 07:00:00           21
+5   CARGO-12 2025-12-23 22:00:00           21</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>0.005 sec elapsed</code></pre>
+</div>
+</div>
 </section>
 <section id="day-23" class="level1 panel-name panel">
 <h1 class="panel-name">Day 23</h1>
 </section>
 <section id="day-24" class="level1 panel-name panel">
 <h1 class="panel-name">Day 24</h1>
-</section>
-<section id="day-25" class="level1 panel-name panel">
-<h1 class="panel-name">Day 25</h1>
 </section>
 </div>
 

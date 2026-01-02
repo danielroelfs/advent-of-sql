@@ -460,6 +460,31 @@ toc()
 
 # Day 22 {.panel-name}
 
+**Day 22**
+
+```{bash}
+#| label: input-day22
+#| echo: false
+#| results: false
+
+psql -d advent_of_sql -a -f ./2025/day_22/input_day22.sql
+```
+
+```{r, code=readLines("./2025/day_22/query_day22.sql")}
+#| label: code-day22
+#| eval: false
+```
+
+```{r}
+#| label: day22
+#| echo: false
+#| cache: true
+
+tic()
+print(dbGetQuery(con, statement = read_file("./2025/day_22/query_day22.sql")))
+toc()
+```
+
 :::
 
 ::: {.panel}
@@ -471,12 +496,6 @@ toc()
 ::: {.panel}
 
 # Day 24 {.panel-name}
-
-:::
-
-::: {.panel}
-
-# Day 25 {.panel-name}
 
 :::
 
